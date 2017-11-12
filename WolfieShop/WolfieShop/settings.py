@@ -79,7 +79,7 @@ DATABASES = {
         'NAME': 'wolfieshop_db',
         #os.path.join(BASE_DIR, 'wolfieshop_db'),
         'USER':'lal',
-        'PASSWORD':'ALL305',
+        'PASSWORD':'ALLCSE305<3',
         'HOST':'localhost',
         'PORT':''
     }
