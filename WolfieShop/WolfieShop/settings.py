@@ -76,10 +76,11 @@ WSGI_APPLICATION = 'WolfieShop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.path.join(BASE_DIR, 'db.sql'),
-        'USER':'',
-        'PASSWORD':'',
-        'HOST':'',
+        'NAME': 'wolfieshop_db',
+        #os.path.join(BASE_DIR, 'wolfieshop_db'),
+        'USER':'lal',
+        'PASSWORD':'ALL305',
+        'HOST':'localhost',
         'PORT':''
     }
 }
