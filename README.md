@@ -31,11 +31,11 @@
 - Adding an Item
   - Visit http://127.0.0.1:8000/admin/
   - Login
-  - Under 'Shop', there is a 'ShopItems' row
+  - Under 'Shop', there is an 'Items' row
   - Click '+Add'
 
 ## Applications
 #### Shop
 - Represents the interface for a customer to shop for items to add to the cart
 ##### Models
-- ShopItem
+- Item
