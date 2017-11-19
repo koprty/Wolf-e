@@ -24,4 +24,16 @@ class Item(models.Model):
     numreviews = models.IntegerField(db_column='NumReviews', blank=False, null=False, default=0) 
 
     class Meta:
+        managed = False
         db_table = 'Item'
+
+class Customer(models.Model):
+    customerid = models.AutoField(db_column='CustomerId', primary_key=True)
+    firstname = models.CharField(db_column='FirstName', max_length=20)
+    lastname = models.CharField(db_column='LastName', max_length=20)
+    email = models.CharField(db_column='Email', max_length=30) 
+    phonenumber = models.CharField(db_column='PhoneNumber', max_length=15, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'Customer'

@@ -15,6 +15,14 @@ CREATE TABLE wolfieshop_db.Item (
 	CHECK (Rating >= 0 AND Rating <= 5)
 );
 
+CREATE TABLE wolfieshop_db.Customer (
+	CustomerId INTEGER AUTO_INCREMENT,
+	FirstName CHAR(20) NOT NULL,
+	LastName CHAR(20) NOT NULL,
+	Email CHAR(30) NOT NULL,
+	PhoneNumber CHAR(15),
+	PRIMARY KEY(CustomerId)
+);
 
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
 GRANT ALL PRIVILEGES ON wolfieshop_db.* TO 'lal'@'localhost';
