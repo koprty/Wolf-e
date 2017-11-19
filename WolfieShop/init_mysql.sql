@@ -4,9 +4,9 @@ CREATE TABLE wolfieshop_db.Item (
 	ItemId INTEGER AUTO_INCREMENT,
 	ItemName VARCHAR(100),
 	Quantity INTEGER,
-	Price DECIMAL,
+	Price DECIMAL(9,2),
 	Category CHAR(25), -- ex Household Appliances, Stationery, Books
-	Rating DECIMAL,
+	Rating DECIMAL(3,2),
 	NumReviews INTEGER,
 	PRIMARY KEY(ItemId),
 	CHECK (Quantity >= 0),
