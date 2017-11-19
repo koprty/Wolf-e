@@ -4,14 +4,15 @@ CREATE TABLE wolfieshop_db.Item (
 	ItemId INTEGER AUTO_INCREMENT,
 	ItemName VARCHAR(100),
 	Quantity INTEGER,
-	Price INTEGER,
+	Price DECIMAL,
 	Category CHAR(25), -- ex Household Appliances, Stationery, Books
-	Rating INTEGER,
-	NumReviews INTEGER DEFAULT 0,
+	Rating DECIMAL,
+	NumReviews INTEGER,
 	PRIMARY KEY(ItemId),
 	CHECK (Quantity >= 0),
 	CHECK (Price >= 0),
-	CHECK (NumReviews >= 0)
+	CHECK (NumReviews >= 0),
+	CHECK (Rating >= 0 AND Rating <= 5)
 );
 
 
