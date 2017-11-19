@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 
-class ShopItem(models.Model):
+class Item(models.Model):
     itemid = models.AutoField(db_column='ItemId', primary_key=True)
     itemname = models.CharField(db_column='ItemName', max_length=100, blank=False, null=False)
     quantity = models.IntegerField(db_column='Quantity', blank=False, null=False)
