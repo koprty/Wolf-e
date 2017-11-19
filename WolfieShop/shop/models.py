@@ -24,4 +24,4 @@ class ShopItem(models.Model):
     numreviews = models.IntegerField(db_column='NumReviews', blank=False, null=False, default=0) 
 
     class Meta:
-        db_table = 'shop_item'
+        db_table = 'Item'

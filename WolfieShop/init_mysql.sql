@@ -1,6 +1,6 @@
 CREATE DATABASE wolfieshop_db;
 
-CREATE TABLE wolfieshop_db.shop_item (
+CREATE TABLE wolfieshop_db.Item (
 	ItemId INTEGER AUTO_INCREMENT,
 	ItemName VARCHAR(100),
 	Quantity INTEGER,
