@@ -9,7 +9,7 @@ class Item(models.Model):
 
     CATEGORIES = (
 		('BOOKS', 'Books'),
-		('STATIONERY', 'Stationary'),
+		('STATIONERY', 'Stationery'),
 		('ELECTRONICS', 'Electronics'),
 	)
     category = models.CharField(

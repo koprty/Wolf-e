@@ -1,0 +1,48 @@
+<h1>Welcome to WolfieShop</h1>
+<h2>Items</h2>
+
+<h3>Books</h3>
+<ul>
+	{% for item in books %}
+		<li>
+			{{ item.itemname }}
+			<ul>
+				<li>Quantity: {{ item.quantity }}</li>
+				<li>Price: {{ item.price}}</li>
+				<li>Rating: {{ item.rating }}</li>
+			</ul>
+		</li>
+	{% endfor %}
+</ul>
+
+<h3>Stationery</h3>
+<ul>
+	{% for item in stationery %}
+		<li>
+			{{ item.itemname }}
+			<ul>
+				<li>Quantity: {{ item.quantity }}</li>
+				<li>Price: {{ item.price}}</li>
+				<li>Rating: {{ item.rating }}</li>
+			</ul>
+		</li>
+	{% endfor %}
+</ul>
+
+
+
+<h3>Electronics</h3>
+<ul>
+	{% for item in electronics %}
+		<li>
+			{{ item.itemname }}
+			<ul>
+				<li>Quantity: {{ item.quantity }}</li>
+				<li>Price: {{ item.price}}</li>
+				<li>Rating: {{ item.rating }}</li>
+			</ul>
+		</li>
+	{% endfor %}
+</ul>
+
+
