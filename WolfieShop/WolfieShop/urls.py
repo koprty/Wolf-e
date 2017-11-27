@@ -20,4 +20,5 @@ from shop import views as shop_view
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', shop_view.index, name='index'),
+    url(r'^item/(?P<item_id>[0-9]+)/$', shop_view.item_detail, name='item_detail')
 ]

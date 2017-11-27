@@ -5,11 +5,9 @@
 <ul>
 	{% for item in books %}
 		<li>
-			{{ item.itemname }}
+			<a href="{% url 'item_detail' item.itemid %}">{{ item.itemname }}</a>
 			<ul>
-				<li>Quantity: {{ item.quantity }}</li>
 				<li>Price: {{ item.price}}</li>
-				<li>Rating: {{ item.rating }}</li>
 			</ul>
 		</li>
 	{% endfor %}
@@ -19,11 +17,9 @@
 <ul>
 	{% for item in stationery %}
 		<li>
-			{{ item.itemname }}
+			<a href="{% url 'item_detail' item.itemid %}">{{ item.itemname }}</a>
 			<ul>
-				<li>Quantity: {{ item.quantity }}</li>
 				<li>Price: {{ item.price}}</li>
-				<li>Rating: {{ item.rating }}</li>
 			</ul>
 		</li>
 	{% endfor %}
@@ -35,11 +31,9 @@
 <ul>
 	{% for item in electronics %}
 		<li>
-			{{ item.itemname }}
+			<a href="{% url 'item_detail' item.itemid %}">{{ item.itemname }}</a>
 			<ul>
-				<li>Quantity: {{ item.quantity }}</li>
 				<li>Price: {{ item.price}}</li>
-				<li>Rating: {{ item.rating }}</li>
 			</ul>
 		</li>
 	{% endfor %}

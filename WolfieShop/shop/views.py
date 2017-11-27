@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Item
 
@@ -12,3 +12,10 @@ def index(request):
 		'electronics' : electronics,
 	}
 	return render(request, 'index.html', context)
+
+def item_detail(request, item_id):
+	item = get_object_or_404(Item, itemid=item_id)
+	context = {
+		'item' : item,
+	}
+	return render(request, 'item.html', context)
