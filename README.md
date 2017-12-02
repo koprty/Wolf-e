@@ -21,6 +21,11 @@
 - Database login:
   - user: lal
   - password: ALLCSE305<3
+- Create a django superuser
+  - python manage.py createsuperuser
+  - (Note that you have to use a good password for this)
+  
+#### Important useful comments for our project we used ;) 
 - Convert database in MySQL to django models
   - `python manage.py inspectdb`
 #### Admin page
@@ -39,3 +44,10 @@
 - Represents the interface for a customer to shop for items to add to the cart
 ##### Models
 - Item
+
+## Todos
+- Add a Customer and their Accounts
+- Add a seller
+- Add an Employee who can login
+- Add Transactions
+- Add Delivery and Payments
