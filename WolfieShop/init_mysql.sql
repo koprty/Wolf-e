@@ -24,6 +24,7 @@ CREATE TABLE wolfieshop_db.Customer (
 	PRIMARY KEY(CustomerId)
 );
 
+
 CREATE TABLE wolfieshop_db.Review (
 	ReviewId INTEGER AUTO_INCREMENT,
 	ItemId INTEGER,
@@ -35,6 +36,19 @@ CREATE TABLE wolfieshop_db.Review (
 	FOREIGN KEY(ItemId) REFERENCES Item(ItemId),
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
 )
+
+
+CREATE TABLE wolfieshop_db.ShoppingCart (
+	ShoppingCartId INTEGER, -- added for primary key
+	CustomerId INTEGER,
+	ItemId INTEGER, -- set val
+	Quantity INTEGER, -- set val
+	PRIMARY KEY(ShoppingCartId), 
+	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId),
+	FOREIGN KEY(ItemId) REFERENCES Item(ItemId),
+	CHECK(Quantity > 0)
+);
+
 
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
 GRANT ALL PRIVILEGES ON wolfieshop_db.* TO 'lal'@'localhost';
