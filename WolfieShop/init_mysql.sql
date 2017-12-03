@@ -5,7 +5,7 @@ CREATE TABLE wolfieshop_db.Item (
 	ItemName VARCHAR(100),
 	Quantity INTEGER,
 	Price DECIMAL(9,2),
-	Category CHAR(25), -- ex Household Appliances, Stationery, Books
+	Category CHAR(25),
 	Rating DECIMAL(3,2),
 	NumReviews INTEGER,
 	PRIMARY KEY(ItemId),
@@ -24,8 +24,21 @@ CREATE TABLE wolfieshop_db.Customer (
 	PRIMARY KEY(CustomerId)
 );
 
+CREATE TABLE wolfieshop_db.Review (
+	ReviewId INTEGER AUTO_INCREMENT,
+	ItemId INTEGER,
+	CustomerId INTEGER,
+	Rating INTEGER NOT NULL,
+	ReviewText VARCHAR(255),
+	CHECK (Rating >= 0 AND Rating <= 5),
+	PRIMARY KEY (ReviewId),
+	FOREIGN KEY(ItemId) REFERENCES Item(ItemId),
+	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
+)
+
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
 GRANT ALL PRIVILEGES ON wolfieshop_db.* TO 'lal'@'localhost';
 FLUSH PRIVILEGES;
 
 quit
+

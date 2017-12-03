@@ -7,7 +7,10 @@
 - Install Django, MySQL, MySQLClient
   - Django
     - You can use Anaconda for that
+    - `pip install django`
   - Mysql
+    - Linux
+        - `sudo apt-get install mysql-server`
   - MySql Client
     - `pip install mysqlclient`
   - Look at this [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/) to see how to run the project
@@ -36,14 +39,15 @@
 - Adding an Item
   - Visit http://127.0.0.1:8000/admin/
   - Login
-  - Under 'Shop', there is an 'Items' row
-  - Click '+Add'
-
 ## Applications
 #### Shop
 - Represents the interface for a customer to shop for items to add to the cart
 ##### Models
 - Item
+- Review
+    - New Key: ReviewId
+    - Django does not support composite keys
+    - A rating can be an int from 0 to 5
 
 ## Todos
 - Add a Customer and their Accounts
@@ -51,3 +55,5 @@
 - Add an Employee who can login
 - Add Transactions
 - Add Delivery and Payments
+- Calculate Rating/NumRatings for every Item
+- Add Ratings form on Item Page

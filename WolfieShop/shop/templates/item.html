@@ -6,3 +6,11 @@
 	<li>Rating: {{ item.rating }}</li>
 	<li>Number of Reviews: {{ item.numreviews }}</li>
 </ul>
+
+<div id="reviews">
+	<h1>Reviews</h1>
+	{% for review in reviews %}
+		<h2> {{review.rating}} / 5 </h2>
+		<p> {{review.reviewtext}} </p>
+	{% endfor %}
+</div>

@@ -37,3 +37,14 @@ class Customer(models.Model):
     class Meta:
         managed = False
         db_table = 'Customer'
+
+class Review(models.Model):
+    reviewid = models.AutoField(db_column='ReviewId', primary_key=True)
+    itemid = models.ForeignKey(Item, models.DO_NOTHING, db_column='ItemId')
+    customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerId')
+    rating = models.IntegerField(db_column='Rating')
+    reviewtext = models.CharField(db_column='ReviewText', max_length=255, blank=True, null=True)
+    
+    class Meta:
+        managed = False
+        db_table = 'Review'
