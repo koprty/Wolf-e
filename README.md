@@ -15,10 +15,12 @@
     - `pip install mysqlclient`
   - Look at this [tutorial](https://docs.djangoproject.com/en/1.11/intro/tutorial01/) to see how to run the project
   - `python manage.py runserver`
+
 #### Setting up the Database
 - Two options (create the database from Scratch
   - Create the MySQL Database
     - `mysql -u root -p < init_mysql.sql`
+    - OR `sudo mysql < init_mysql.sql`
   - Import Database
     - TBD
 - Database login:
@@ -27,7 +29,11 @@
 - Create a django superuser
   - python manage.py createsuperuser
   - (Note that you have to use a good password for this)
-  
+#### Resetting the Database
+- Messed up or did the setting up not work?
+  - Delete database and default mysql user:
+    - `mysql -u root -p < reset_mysql.sql`
+    - OR `sudo mysql < reset_mysql.sql`
 #### Important useful comments for our project we used ;) 
 - Convert database in MySQL to django models
   - `python manage.py inspectdb`
@@ -50,7 +56,7 @@
     - A rating can be an int from 0 to 5
 
 ## Todos
-- Add a Customer and their Accounts
+- Add a Customer and their Accounts (in progress) 
 - Add a seller
 - Add an Employee who can login
 - Add Transactions
