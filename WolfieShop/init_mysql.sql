@@ -35,7 +35,7 @@ CREATE TABLE wolfieshop_db.Review (
 	PRIMARY KEY (ReviewId),
 	FOREIGN KEY(ItemId) REFERENCES Item(ItemId),
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
-)
+);
 
 
 CREATE TABLE wolfieshop_db.ShoppingCart (

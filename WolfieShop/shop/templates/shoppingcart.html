@@ -1,0 +1,18 @@
+{% for shoppingcartrow in shoppingcart %}
+	<h1>{{ shoppingcartrow.shoppingcartid }}</h1><!--this can be removed for customer-visible pages -->
+	<ul>
+		<li>CustomerId: {{ shoppingcartrow.customerid }}</li>
+		<li>ItemId: {{ shoppingcartrow.itemid }}</li>
+		<li>Quantity: {{ shoppingcartrow.quantity }}</li>
+	</ul>
+{% endfor %}
+
+<!--
+<div id="reviews">
+	<h1>Reviews</h1>
+	{% for sc in scs %}
+		<h2> {{review.rating}} / 5 </h2>
+		<p> {{review.reviewtext}} </p>
+	{% endfor %}
+</div>
+-->

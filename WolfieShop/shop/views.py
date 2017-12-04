@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Item, Review
+from .models import Item, Review, ShoppingCart
 
 def index(request):
 	books = Item.objects.filter(category='Books')
@@ -27,3 +27,27 @@ def get_reviews(item_id):
 		+ "WHERE ItemId=" + item_id + ";"
 	reviews = Review.objects.raw(query)
 	return reviews
+
+def shoppingcart_detail(request, shoppingcart_id):
+	shoppingcart = get_shoppingcart(shoppingcart_id)
+	context = {
+		'shoppingcart' : shoppingcart,
+	}
+	return render(request, 'shoppingcart.html', context)
+
+#get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
+#customerid, but different items and corresponding quantities.
+def get_shoppingcart(shoppingcart_id):
+	query = "SELECT * FROM wolfieshop_db.ShoppingCart " \
+		+ "WHERE ShoppingCartId=" + shoppingcart_id + ";"
+	scrows = ShoppingCart.objects.raw(query)
+	return scrows
+
+#this method may be useful in the future to get the relevant shopping cart for a customer.
+#Note that the table is set valued across certain fields, so multiple rows may be returned.
+def get_shoppingcart(customer_id):
+	query = "SELECT * FROM wolfieshop_db.ShoppingCart " \
+		+ "WHERE CustomerId=" + customer_id + ";"
+	scrows = ShoppingCart.objects.raw(query)
+	return scrows
+

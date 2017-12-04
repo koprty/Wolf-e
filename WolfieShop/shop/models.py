@@ -50,7 +50,7 @@ class Review(models.Model):
         db_table = 'Review'
 
 
-class Shoppingcart(models.Model):
+class ShoppingCart(models.Model):
     shoppingcartid = models.IntegerField(db_column='ShoppingCartId', primary_key=True)  # Field name made lowercase.
     customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
     itemid = models.ForeignKey(Item, models.DO_NOTHING, db_column='ItemId', blank=True, null=True)  # Field name made lowercase.
