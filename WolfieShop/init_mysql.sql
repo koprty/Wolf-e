@@ -50,6 +50,32 @@ CREATE TABLE wolfieshop_db.ShoppingCart (
 );
 
 
+CREATE TABLE wolfieshop_db.TransactionOrder ( -- can't be named transaction
+	TransactionId INTEGER AUTO_INCREMENT,
+	CustomerId INTEGER,
+	TotalPrice INTEGER,
+	DateProcessed DATETIME,
+	PRIMARY KEY(TransactionId),
+	CHECK (TotalPrice >= 0)  -- we may give free stuff 
+    -- this is processed already, so the tables should never change
+);
+
+
+CREATE TABLE wolfieshop_db.TransactionContents (
+	TransactionContentsId INTEGER AUTO_INCREMENT, -- added for primary key. Only TransactionId will really be needed for lookup though
+	TransactionId INTEGER,
+	CustomerId	INTEGER,
+	ItemId INTEGER,   -- Set value - points to to an item in the item table
+	Quantity INTEGER,   -- This is dependent on ItemId
+	PricePerItem INTEGER,   -- This is dependent on ItemId
+	PRIMARY KEY(TransactionContentsId),
+	CHECK(PricePerItem >= 0), 
+	CHECK(Quantity > 0)
+);
+
+
+
+
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
 GRANT ALL PRIVILEGES ON wolfieshop_db.* TO 'lal'@'localhost';
 FLUSH PRIVILEGES;
