@@ -58,3 +58,6 @@ def get_transactioncontents(transaction_id):
 	transactioncontents = TransactionContents.objects.raw(query)
 	return transactioncontents
 
+def loginformpage():
+	context = {}
+	return render(request, "login.html", context)

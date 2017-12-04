@@ -16,12 +16,14 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from shop import views as shop_view
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', shop_view.index, name='index'),
     url(r'^item/(?P<item_id>[0-9]+)/$', shop_view.item_detail, name='item_detail'),
-    url(r'^shoppingcart/(?P<shoppingcart_id>[0-9]+)/$', shop_view.shoppingcart_detail, name='shoppingcart_detail')
+    url(r'^shoppingcart/(?P<shoppingcart_id>[0-9]+)/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'})
     #obviously access to these sc pages wouldn't actually be given to the customer. The customer would get a page
     #after logging in however that is exclusively his/her shopping cart. To be changed after customer login implemented
 ]

@@ -24,6 +24,7 @@ CREATE TABLE wolfieshop_db.Customer (
 	PRIMARY KEY(CustomerId)
 );
 
+USE wolfieshop_db;
 
 CREATE TABLE wolfieshop_db.Review (
 	ReviewId INTEGER AUTO_INCREMENT,
@@ -37,6 +38,7 @@ CREATE TABLE wolfieshop_db.Review (
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
 );
 
+USE wolfieshop_db;
 
 CREATE TABLE wolfieshop_db.ShoppingCart (
 	ShoppingCartId INTEGER, -- added for primary key
@@ -49,6 +51,7 @@ CREATE TABLE wolfieshop_db.ShoppingCart (
 	CHECK(Quantity > 0)
 );
 
+USE wolfieshop_db;
 
 CREATE TABLE wolfieshop_db.TransactionOrder ( -- can't be named transaction
 	TransactionId INTEGER AUTO_INCREMENT,
@@ -60,6 +63,7 @@ CREATE TABLE wolfieshop_db.TransactionOrder ( -- can't be named transaction
     -- this is processed already, so the tables should never change
 );
 
+USE wolfieshop_db;
 
 CREATE TABLE wolfieshop_db.TransactionContents (
 	TransactionContentsId INTEGER AUTO_INCREMENT, -- added for primary key. Only TransactionId will really be needed for lookup though
