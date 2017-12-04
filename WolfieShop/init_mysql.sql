@@ -1,6 +1,9 @@
 CREATE DATABASE wolfieshop_db;
 
-CREATE TABLE wolfieshop_db.Item (
+USE wolfieshop_db;
+
+
+CREATE TABLE Item (
 	ItemId INTEGER AUTO_INCREMENT,
 	ItemName VARCHAR(100),
 	Quantity INTEGER,
@@ -15,7 +18,7 @@ CREATE TABLE wolfieshop_db.Item (
 	CHECK (Rating >= 0 AND Rating <= 5)
 );
 
-CREATE TABLE wolfieshop_db.Customer (
+CREATE TABLE Customer (
 	CustomerId INTEGER AUTO_INCREMENT,
 	FirstName CHAR(20) NOT NULL,
 	LastName CHAR(20) NOT NULL,
@@ -25,9 +28,8 @@ CREATE TABLE wolfieshop_db.Customer (
 	PRIMARY KEY(CustomerId)
 );
 
-USE wolfieshop_db;
 
-CREATE TABLE wolfieshop_db.Review (
+CREATE TABLE Review (
 	ReviewId INTEGER AUTO_INCREMENT,
 	ItemId INTEGER,
 	CustomerId INTEGER,
@@ -39,9 +41,8 @@ CREATE TABLE wolfieshop_db.Review (
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
 );
 
-USE wolfieshop_db;
 
-CREATE TABLE wolfieshop_db.ShoppingCart (
+CREATE TABLE ShoppingCart (
 	ShoppingCartId INTEGER, -- added for primary key
 	CustomerId INTEGER,
 	ItemId INTEGER, -- set val
@@ -52,9 +53,7 @@ CREATE TABLE wolfieshop_db.ShoppingCart (
 	CHECK(Quantity > 0)
 );
 
-USE wolfieshop_db;
-
-CREATE TABLE wolfieshop_db.TransactionOrder ( -- can't be named transaction
+CREATE TABLE TransactionOrder ( -- can't be named transaction
 	TransactionId INTEGER AUTO_INCREMENT,
 	CustomerId INTEGER,
 	TotalPrice INTEGER,
@@ -66,7 +65,7 @@ CREATE TABLE wolfieshop_db.TransactionOrder ( -- can't be named transaction
 
 USE wolfieshop_db;
 
-CREATE TABLE wolfieshop_db.TransactionContents (
+CREATE TABLE TransactionContents (
 	TransactionContentsId INTEGER AUTO_INCREMENT, -- added for primary key. Only TransactionId will really be needed for lookup though
 	TransactionId INTEGER,
 	CustomerId	INTEGER,
@@ -77,7 +76,6 @@ CREATE TABLE wolfieshop_db.TransactionContents (
 	CHECK(PricePerItem >= 0), 
 	CHECK(Quantity > 0)
 );
-
 
 
 
