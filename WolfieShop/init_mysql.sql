@@ -21,6 +21,7 @@ CREATE TABLE wolfieshop_db.Customer (
 	LastName CHAR(20) NOT NULL,
 	Email CHAR(30) NOT NULL,
 	PhoneNumber CHAR(15),
+	PasswordHash CHAR(100) DEFAULT NULL,
 	PRIMARY KEY(CustomerId)
 );
 

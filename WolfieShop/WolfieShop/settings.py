@@ -125,5 +125,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# If login fails, let us redirect to home
+# If login fails, let us redirect to some plain logout page
 LOGIN_REDIRECT_URL = '/logout'
