@@ -1,6 +1,5 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import AbstractUser
 
 class Item(models.Model):
     itemid = models.AutoField(db_column='ItemId', primary_key=True)
@@ -30,11 +29,11 @@ class Item(models.Model):
 
 class Customer(models.Model):
     customerid = models.AutoField(db_column='CustomerId', primary_key=True)
-    firstname = models.CharField(db_column='FirstName', max_length=20)
-    lastname = models.CharField(db_column='LastName', max_length=20)
+    firstname = models.CharField(db_column='FirstName', max_length=20, verbose_name="First Name")
+    lastname = models.CharField(db_column='LastName', max_length=20, verbose_name="Last Name")
     email = models.CharField(db_column='Email', max_length=30) 
-    phonenumber = models.CharField(db_column='PhoneNumber', max_length=15, blank=True, null=True)
-    passwordhash = models.CharField(db_column='PasswordHash', max_length=100, blank=True, null=True)  
+    phonenumber = models.CharField(db_column='PhoneNumber', max_length=15, blank=True, null=True, verbose_name="Phone Number")
+    passwordhash = models.CharField(db_column='PasswordHash', max_length=100, verbose_name="Password")  
 
     class Meta:
         managed = False

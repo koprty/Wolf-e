@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from shop import views as shop_view
+
+#for if we want to recreate another admin login portal
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -25,8 +27,9 @@ urlpatterns = [
     url(r'^shoppingcart/(?P<shoppingcart_id>[0-9]+)/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
 
     # this is for admin login... we will use this to make the login page prettier later if we have time
-    url(r'^login/$', name="customer_login"),
+    url(r'^login/$', auth_views.login, {'template_name': 'customerlogin.html'}),
 
+    url(r'^register/$', shop_view.customer_register, name='customer_register'),
     # Some generic logout page for debugging and possibly later
     url(r'^logout/$', auth_views.login, {'template_name': 'logout.html'})
 

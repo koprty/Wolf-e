@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Item, Review, ShoppingCart
+from django import forms
+from .forms import CustomerRegisterForm
 
 def index(request):
 	books = Item.objects.filter(category='Books')
@@ -58,6 +60,28 @@ def get_transactioncontents(transaction_id):
 	transactioncontents = TransactionContents.objects.raw(query)
 	return transactioncontents
 
-def loginformpage():
+
+def customer_register(request):
+	if (request.method == "POST"):
+		form = CustomerRegisterForm(request.POST)
+		if form.is_valid():
+			# do good stuff
+			pass;
+		else:
+			print ("things are bad");
+			#ideally post some error message
+	else:
+		print("this is not a post request...")
+		form = CustomerRegisterForm()
+	context = {'form': form}
+	return render(request, 'customerregister.html', context)
+
+
+def customer_login():
 	context = {}
-	return render(request, "login.html", context)
+	return render(request, "customerlogin.html", context)
+
+def admin_login():
+	context = {}
+	return render(request, "adminlogin.html", context)
+
