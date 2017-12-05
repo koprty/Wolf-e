@@ -1,6 +1,6 @@
 from django.db import models
-from django.core.urlresolvers import reverse
-from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
+
 
 class Item(models.Model):
     itemid = models.AutoField(db_column='ItemId', primary_key=True)
@@ -34,7 +34,6 @@ class Customer(models.Model):
     lastname = models.CharField(db_column='LastName', max_length=20)
     email = models.CharField(db_column='Email', max_length=30) 
     phonenumber = models.CharField(db_column='PhoneNumber', max_length=15, blank=True, null=True)
-    passwordhash = models.CharField(db_column='PasswordHash', max_length=100, blank=True, null=True)  
 
     class Meta:
         managed = False
@@ -50,6 +49,7 @@ class Review(models.Model):
     class Meta:
         managed = False
         db_table = 'Review'
+        unique_together = (('itemid', 'customerid'),)
 
 
 class ShoppingCart(models.Model):
@@ -61,28 +61,3 @@ class ShoppingCart(models.Model):
     class Meta:
         managed = False
         db_table = 'ShoppingCart'
-
-
-class TransactionContents(models.Model):
-    transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)  # Field name made lowercase.
-    transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
-    priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'TransactionContents'
-
-
-class TransactionOrder(models.Model):
-    transactionid = models.AutoField(db_column='TransactionId', primary_key=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)  # Field name made lowercase.
-    dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'TransactionOrder'
-

@@ -1,7 +1,5 @@
 CREATE DATABASE wolfieshop_db;
-
-USE wolfieshop_db;
-
+use wolfieshop_db;
 
 CREATE TABLE Item (
 	ItemId INTEGER AUTO_INCREMENT,
@@ -10,7 +8,7 @@ CREATE TABLE Item (
 	Price DECIMAL(9,2),
 	Category CHAR(25),
 	Rating DECIMAL(3,2),
-	NumReviews INTEGER,
+	NumReviews INTEGER DEFAULT 0,
 	PRIMARY KEY(ItemId),
 	CHECK (Quantity >= 0),
 	CHECK (Price >= 0),
@@ -36,14 +34,30 @@ CREATE TABLE Review (
 	Rating INTEGER NOT NULL,
 	ReviewText VARCHAR(255),
 	CHECK (Rating >= 0 AND Rating <= 5),
+	UNIQUE (ItemId, CustomerId), -- A customer can review an item only once
 	PRIMARY KEY (ReviewId),
 	FOREIGN KEY(ItemId) REFERENCES Item(ItemId),
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
 );
 
+DELIMITER $$ 
+CREATE TRIGGER update_item_review AFTER INSERT ON Review 
+	FOR EACH ROW 
+BEGIN
+	UPDATE Item 
+	SET Rating = (
+		SELECT AVG(Rating) 
+		FROM Review 
+		WHERE Item.ItemId = Review.ItemId 
+	);
+	
+	UPDATE Item 
+	SET NumReviews = NumReviews + 1;
+END;$$
+DELIMITER ;
 
 CREATE TABLE ShoppingCart (
-	ShoppingCartId INTEGER, -- added for primary key
+	ShoppingCartId INTEGER AUTO_INCREMENT, -- added for primary key
 	CustomerId INTEGER,
 	ItemId INTEGER, -- set val
 	Quantity INTEGER, -- set val
@@ -62,8 +76,6 @@ CREATE TABLE TransactionOrder ( -- can't be named transaction
 	CHECK (TotalPrice >= 0)  -- we may give free stuff 
     -- this is processed already, so the tables should never change
 );
-
-USE wolfieshop_db;
 
 CREATE TABLE TransactionContents (
 	TransactionContentsId INTEGER AUTO_INCREMENT, -- added for primary key. Only TransactionId will really be needed for lookup though
