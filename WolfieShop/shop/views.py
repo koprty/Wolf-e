@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder
 from django import forms
-from .forms import CustomerRegisterForm
+#from .forms import CustomerRegisterForm
 
 def index(request):
 	books = Item.objects.filter(category='Books')

@@ -1,10 +1,11 @@
-{% for orderrow in transactionorder %}
-	<h1>{{ orderrow.transactionid }}</h1><!--this can be removed for customer-visible pages -->
-	<ul>
-		<li>CustomerId: {{ orderrow.customerid }}</li>
-		<li>TotalPrice: {{ orderrow.totalprice }}</li>
-		<li>DateProcessed: {{ orderrow.dateprocessed }}</li>
-	</ul>
+
+<h1>{{ orderrow.transactionid }}</h1><!--this can be removed for customer-visible pages -->
+<ul>
+	<li>CustomerId: {{ orderrow.customerid }}</li>
+	<li>TotalPrice: {{ orderrow.totalprice }}</li>
+	<li>DateProcessed: {{ orderrow.dateprocessed }}</li>
+</ul>
+
 
 {% for controw in transactioncontents %}
 	<h1>{{ controw.transactionid }}</h1>
@@ -16,3 +17,5 @@
 {% endfor %}
 
 <!-- note - need to calculate total price somewhere
+ note - need to create transactioncontents rows based on what we order in a transaction.
+ So first need to be able to order specific items in a transaction.
