@@ -68,3 +68,4 @@
 - Add an Employee who can login
 - Add Transactions
 - Add Delivery and Payments
+- Create transactions upon checkout, create transactioncontents rows upon transaction based on item inventory

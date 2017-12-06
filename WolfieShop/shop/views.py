@@ -147,6 +147,9 @@ def customer_register(request):
 				#newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=make_password(passwordhash))
 				newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=passwordhash)
 				newCust.save()
+				newSc = ShoppingCart(customerid=newCust)
+				newSc.save()
+
 				print (email+ " has been saved");
 				return redirect("/")
 			
