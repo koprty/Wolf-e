@@ -42,19 +42,18 @@ CREATE TABLE Review (
 
 DELIMITER $$ 
 CREATE TRIGGER update_item_review AFTER INSERT ON Review 
-	FOR EACH ROW 
+	FOR EACH ROW  
 BEGIN
 	UPDATE Item 
-	SET Rating = (
+	SET Rating = ( 
 		SELECT AVG(Rating) 
 		FROM Review 
 		WHERE Item.ItemId = Review.ItemId 
-	);
-	
-	UPDATE Item 
-	SET NumReviews = NumReviews + 1;
-END;$$
-DELIMITER ;
+		), 
+	NumReviews = NumReviews + 1 
+	WHERE Item.ItemId = Review.ItemId; 
+END;$$ 
+DELIMITER ; 
 
 CREATE TABLE ShoppingCart (
 	ShoppingCartId INTEGER AUTO_INCREMENT, -- added for primary key

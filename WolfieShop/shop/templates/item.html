@@ -6,11 +6,21 @@
 	<li>Rating: {{ item.rating }}</li>
 	<li>Number of Reviews: {{ item.numreviews }}</li>
 </ul>
-
+<hr>
 <div id="reviews">
 	<h1>Reviews</h1>
 	{% for review in reviews %}
 		<h2> {{review.rating}} / 5 </h2>
 		<p> {{review.reviewtext}} </p>
+		<p> - {{review.customerid.firstname}} {{review.customerid.lastname}}</p>
+		<hr>
 	{% endfor %}
+</div>
+<hr>
+<div id="create_review">
+	<form action="submit_review/" method="post">
+    	{% csrf_token %}
+    	{{ form.as_p }}
+		<button type="submit">Submit</button>
+	</form>
 </div>

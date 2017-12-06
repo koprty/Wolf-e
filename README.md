@@ -68,5 +68,3 @@
 - Add an Employee who can login
 - Add Transactions
 - Add Delivery and Payments
-- Calculate Rating/NumRatings for every Item
-- Add Ratings form on Item Page

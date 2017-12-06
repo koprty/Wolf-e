@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', shop_view.index, name='index'),
     url(r'^item/(?P<item_id>[0-9]+)/$', shop_view.item_detail, name='item_detail'),
+     url(r'^item/(?P<item_id>[0-9]+)/submit_review/$', shop_view.submit_review, name='submit_review'),
+    
     url(r'^shoppingcart/(?P<shoppingcart_id>[0-9]+)/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
     url(r'^transaction/(?P<transaction_id>[0-9]+)/$', shop_view.transaction_detail, name='transaction_detail'),
     #given transactionid, want to print info from transactioncontents
@@ -33,7 +35,7 @@ urlpatterns = [
 
     url(r'^register/$', shop_view.customer_register, name='customer_register'),
     # Some generic logout page for debugging and possibly later
-    #url(r'^logout/$', auth_views.login, {'template_name': 'logout.html'})
+    # url(r'^logout/$', auth_views.login, {'template_name': 'logout.html'})
     url(r'^logout/$', shop_view.logout, name='customer_logout')
     #obviously access to these sc pages wouldn't actually be given to the customer. The customer would get a page
     #after logging in however that is exclusively his/her shopping cart. To be changed after customer login implemented

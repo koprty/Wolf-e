@@ -84,4 +84,3 @@ class TransactionOrder(models.Model):
     class Meta:
         managed = False
         db_table = 'TransactionOrder'
-

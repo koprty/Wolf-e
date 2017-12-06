@@ -1,4 +1,4 @@
-from .models import Customer
+from .models import Customer, Review
 from django import forms
 
 
@@ -15,3 +15,10 @@ class LoginForm(forms.ModelForm):
 		model = Customer
 		fields =["email", "passwordhash"]
 		#exclude=("customerid")
+
+class SubmitReviewForm(forms.ModelForm):
+	rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
+	reviewtext = forms.CharField(widget=forms.Textarea, max_length=255, label="Leave a Review!")
+	class Meta:
+		model = Review
+		fields=["rating", "reviewtext"]

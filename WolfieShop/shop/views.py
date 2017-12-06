@@ -1,10 +1,13 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder, Customer
 from django import forms
-from .forms import CustomerRegisterForm, LoginForm
+from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm
 from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
 
+"""
+Home Page / Index
+"""
 def index(request):
 	books = Item.objects.filter(category='Books')
 	stationery = Item.objects.filter(category='stationery')
@@ -18,13 +21,25 @@ def index(request):
 	loggedIn(request)
 	return render(request, 'index.html', context)
 
+
+"""
+Item Details Page
+"""
 def item_detail(request, item_id):
+	# Get item and reviews
 	item = get_object_or_404(Item, itemid=item_id)
 	reviews = get_reviews(item_id)
+	
+	# Load review form
+	if loggedIn(request):
+		form = SubmitReviewForm()
+	else:
+		form = LoginForm()
 	
 	context = {
 		'item' : item,
 		'reviews' : reviews,
+		'form' : form,
 	}
 	return render(request, 'item.html', context)
 
@@ -34,6 +49,27 @@ def get_reviews(item_id):
 	reviews = Review.objects.raw(query)
 	return reviews
 
+def submit_review(request, item_id):
+	if (request.method == "POST"):
+		form = SubmitReviewForm(request.POST)
+		if form.is_valid():
+			data = form.cleaned_data
+			rating = data['rating']
+			reviewtext = data['reviewtext']
+			
+			item = get_object_or_404(Item, itemid=item_id)
+			
+			customer_email = userlogged(request)
+			customer = get_object_or_404(Customer, email=customer_email)
+
+			new_review = Review(itemid=item, customerid=customer,rating=rating,reviewtext=reviewtext)
+			new_review.save()
+	
+	return redirect("/item/" + item_id)
+	
+"""
+Shopping Cart
+"""
 def shoppingcart_detail(request, shoppingcart_id):
 	shoppingcart = get_shoppingcart(shoppingcart_id)
 	context = {
@@ -74,6 +110,10 @@ def get_transactioncontents(transaction_id):
 	transactioncontents = TransactionContents.objects.raw(query)
 	return transactioncontents
 
+
+"""
+Customer Registration/Login
+"""
 #@transaction.commit_manually
 def customer_register(request):
 	if (request.method == "POST"):
@@ -124,6 +164,8 @@ def customer_login(request):
 				form = LoginForm()
 		else:
 			form = LoginForm()
+	else:
+		form = LoginForm()
 	context = {'form':form }
 
 	return render(request, "customerlogin.html", context)
@@ -173,4 +215,3 @@ def userlogged(request):
 	except KeyError as e:
   		pass
 	return username
-
