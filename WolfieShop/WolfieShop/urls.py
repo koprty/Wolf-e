@@ -29,12 +29,12 @@ urlpatterns = [
     #given transactionid, want to print info from transactioncontents
 
     # this is for admin login... we will use this to make the login page prettier later if we have time
-    url(r'^login/$', auth_views.login, {'template_name': 'customerlogin.html'}),
+    url(r'^login/$', shop_view.customer_login, name='customer_login'),
 
     url(r'^register/$', shop_view.customer_register, name='customer_register'),
     # Some generic logout page for debugging and possibly later
-    url(r'^logout/$', auth_views.login, {'template_name': 'logout.html'})
-
+    #url(r'^logout/$', auth_views.login, {'template_name': 'logout.html'})
+    url(r'^logout/$', shop_view.logout, name='customer_logout')
     #obviously access to these sc pages wouldn't actually be given to the customer. The customer would get a page
     #after logging in however that is exclusively his/her shopping cart. To be changed after customer login implemented
 ]
