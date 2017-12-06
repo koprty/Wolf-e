@@ -45,6 +45,7 @@
 - Adding an Item
   - Visit http://127.0.0.1:8000/admin/
   - Login
+
 ## Applications
 #### Shop
 - Represents the interface for a customer to shop for items to add to the cart
@@ -54,6 +55,12 @@
     - New Key: ReviewId
     - Django does not support composite keys
     - A rating can be an int from 0 to 5
+- Customer
+##### Sessions
+- We keep track of a customer's login session
+  - Dev Notes, you can find if a customer has been logged in by calling the loggedin() function <- right now returns a boolean if loggedin or not
+    - OR you can manually check the sessions attribute of each request
+    - TODO: make login and register inaccessible if already loggedin
 
 ## Todos
 - Add a Customer and their Accounts (in progress) 
