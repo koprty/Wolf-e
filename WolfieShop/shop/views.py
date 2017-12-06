@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
 from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder, Customer
 from django import forms
 from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm
@@ -73,18 +73,18 @@ Shopping Cart
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
 	if not loggedIn(request):
-		form = MessageLoginForm("login message")
+		form = LoginForm()
 
-	else:
-		customer_email = userlogged(request)
-		customer = get_object_or_404(Customer, email=customer_email)
+	
+	customer_email = userlogged(request)
+	customer = get_object_or_404(Customer, email=customer_email)
 
-		shoppingcart = get_shoppingcart_fromcust(customer)
+	shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
 
-		context = {
-			'shoppingcart' : shoppingcart,
-		}
-		return render(request, 'shoppingcart.html', context)
+	context = {
+		'shoppingcart' : shoppingcart,
+	}
+	return render(request, 'shoppingcart.html', context)
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
 #customerid, but different items and corresponding quantities.

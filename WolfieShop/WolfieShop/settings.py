@@ -27,7 +27,7 @@ SECRET_KEY = '%4=oh_44q-7m$mvo8mt3_6i+umemk)m=!4=de1ny)6^yw(yuh7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['wolfieshop-bunnyrailgun.c9users.io']
+ALLOWED_HOSTS = ['localhost', 'wolfieshop-bunnyrailgun.c9users.io']
 
 
 # Application definition
