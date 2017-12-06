@@ -1,0 +1,8 @@
+<h1> Customer Register <h1>
+	<h4>Note to self.... we need to add a space for error messages here</h4>
+  <h2>Register</h2>
+  <form method="POST" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+  </form>
