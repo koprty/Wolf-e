@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from .models import Item, Review, ShoppingCart
+from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder
 from django import forms
 from .forms import CustomerRegisterForm
 
@@ -52,6 +52,16 @@ def get_shoppingcart_fromcust(customer_id):
 		+ "WHERE CustomerId=" + customer_id + ";"
 	scrows = ShoppingCart.objects.raw(query)
 	return scrows
+
+
+def transaction_detail(request, transaction_id):
+	transactionorder = get_object_or_404(TransactionOrder, transactionid = transaction_id)
+	transactioncontents = get_transactioncontents(transaction_id)
+	context = {
+		'transactionorder' : transactionorder,
+		'transactioncontents' : transactioncontents,
+	}
+	return render(request, 'transaction.html', context)
 
 #get all transactioncontents rows with this transaction id. Should have unique item_ids within these rows.
 def get_transactioncontents(transaction_id):

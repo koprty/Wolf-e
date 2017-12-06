@@ -1,0 +1,18 @@
+{% for orderrow in transactionorder %}
+	<h1>{{ orderrow.transactionid }}</h1><!--this can be removed for customer-visible pages -->
+	<ul>
+		<li>CustomerId: {{ orderrow.customerid }}</li>
+		<li>TotalPrice: {{ orderrow.totalprice }}</li>
+		<li>DateProcessed: {{ orderrow.dateprocessed }}</li>
+	</ul>
+
+{% for controw in transactioncontents %}
+	<h1>{{ controw.transactionid }}</h1>
+	<ul>
+		<li>CustomerId: {{ orderrow.customerid }}</li>
+		<li>ItemId: {{ controw.itemid }}</li>
+		<li>Quantity: {{ controw.quantity }}</li>
+	</ul>
+{% endfor %}
+
+<!-- note - need to calculate total price somewhere

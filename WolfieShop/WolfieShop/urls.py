@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^$', shop_view.index, name='index'),
     url(r'^item/(?P<item_id>[0-9]+)/$', shop_view.item_detail, name='item_detail'),
     url(r'^shoppingcart/(?P<shoppingcart_id>[0-9]+)/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
+    url(r'^transaction/(?P<transaction_id>[0-9]+)/$', shop_view.transaction_detail, name='transaction_detail'),
+    #given transactionid, want to print info from transactioncontents
 
     # this is for admin login... we will use this to make the login page prettier later if we have time
     url(r'^login/$', auth_views.login, {'template_name': 'customerlogin.html'}),
