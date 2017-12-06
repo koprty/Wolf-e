@@ -156,7 +156,7 @@ def validateAccount(email, password):
 
 	return len(customercontents) > 0
 
-
+# boolean function to check to see if someone has been logged in
 def loggedIn(request):
 	username = ""
 	try:
@@ -166,4 +166,13 @@ def loggedIn(request):
   		print ("Not Logged in")
   		return False
   	return True
+
+# return the username of the user that is loggedin
+def userlogged(request):
+	username = None
+	try:
+  		username = request.session['username']
+  	except KeyError, e:
+  		pass
+  	return username
 
