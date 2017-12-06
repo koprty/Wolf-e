@@ -1,5 +1,10 @@
 from django.db import models
+<<<<<<< HEAD
 from django.core.urlresolvers import reverse
+=======
+from django.urls import reverse
+
+>>>>>>> 9658d7ee2fa8819f1ec9951009edf200cd4ddbdf
 
 class Item(models.Model):
     itemid = models.AutoField(db_column='ItemId', primary_key=True)
@@ -49,6 +54,7 @@ class Review(models.Model):
     class Meta:
         managed = False
         db_table = 'Review'
+        unique_together = (('itemid', 'customerid'),)
 
 
 class ShoppingCart(models.Model):
@@ -60,28 +66,3 @@ class ShoppingCart(models.Model):
     class Meta:
         managed = False
         db_table = 'ShoppingCart'
-
-
-class TransactionContents(models.Model):
-    transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)  # Field name made lowercase.
-    transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
-    priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'TransactionContents'
-
-
-class TransactionOrder(models.Model):
-    transactionid = models.AutoField(db_column='TransactionId', primary_key=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)  # Field name made lowercase.
-    dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)  # Field name made lowercase.
-
-    class Meta:
-        managed = False
-        db_table = 'TransactionOrder'
-
