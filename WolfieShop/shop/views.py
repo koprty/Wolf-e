@@ -70,12 +70,21 @@ def submit_review(request, item_id):
 """
 Shopping Cart
 """
-def shoppingcart_detail(request, shoppingcart_id):
-	shoppingcart = get_shoppingcart(shoppingcart_id)
-	context = {
-		'shoppingcart' : shoppingcart,
-	}
-	return render(request, 'shoppingcart.html', context)
+#editing to only display your shopping cart
+def shoppingcart_detail(request):
+	if not loggedIn(request):
+		form = MessageLoginForm("login message")
+
+	else:
+		customer_email = userlogged(request)
+		customer = get_object_or_404(Customer, email=customer_email)
+
+		shoppingcart = get_shoppingcart_fromcust(customer)
+
+		context = {
+			'shoppingcart' : shoppingcart,
+		}
+		return render(request, 'shoppingcart.html', context)
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
 #customerid, but different items and corresponding quantities.

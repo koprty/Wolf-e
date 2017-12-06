@@ -52,10 +52,10 @@ class Review(models.Model):
 
 
 class ShoppingCart(models.Model):
-    shoppingcartid = models.IntegerField(db_column='ShoppingCartId', primary_key=True)  # Field name made lowercase.
-    customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    itemid = models.ForeignKey(Item, models.DO_NOTHING, db_column='ItemId', blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
+    shoppingcartid = models.IntegerField(db_column='ShoppingCartId', primary_key=True)
+    customerid = models.ForeignKey(Customer, models.DO_NOTHING, db_column='CustomerId', blank=True, null=True)
+    itemid = models.ForeignKey(Item, models.DO_NOTHING, db_column='ItemId', blank=True, null=True)
+    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -63,12 +63,12 @@ class ShoppingCart(models.Model):
 
 
 class TransactionContents(models.Model):
-    transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)  # Field name made lowercase.
-    transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)  # Field name made lowercase.
-    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)  # Field name made lowercase.
-    priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)  # Field name made lowercase.
+    transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)
+    transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)
+    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
+    itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)
+    quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
+    priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -76,10 +76,10 @@ class TransactionContents(models.Model):
 
 
 class TransactionOrder(models.Model):
-    transactionid = models.AutoField(db_column='TransactionId', primary_key=True)  # Field name made lowercase.
-    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)  # Field name made lowercase.
-    totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)  # Field name made lowercase.
-    dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)  # Field name made lowercase.
+    transactionid = models.AutoField(db_column='TransactionId', primary_key=True)
+    customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
+    totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)
+    dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)
 
     class Meta:
         managed = False
