@@ -82,7 +82,7 @@ def customer_register(request):
 			# We validate by checking the email
 			# Get email to check if customer exists
 			data = form.cleaned_data
-  			email = data['email']
+			email = data['email']
 			if customerExists(email):
 				#customer already exists
 				print ("CUSTOMER ALREADY EXISTS")
@@ -90,9 +90,9 @@ def customer_register(request):
 				return render(request, 'customerregister.html', context)
 			else:
 				firstname = data['firstname']
-	  			lastname = data['lastname']
-	  			phonenumber = data['phonenumber'] 
-	  			passwordhash = data['passwordhash']
+				lastname = data['lastname']
+				phonenumber = data['phonenumber'] 
+				passwordhash = data['passwordhash']
 				query = "INSERT INTO wolfieshop_db.Customer(FirstName, LastName, Email, PhoneNumber, PasswordHash) \
 				VALUES (" +  firstname + "," +  lastname + "," + email + "," + phonenumber + "," + passwordhash + ");" 
 				#newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=make_password(passwordhash))
@@ -114,18 +114,16 @@ def customer_login(request):
 		form = LoginForm(request.POST)
 		if form.is_valid():
 			data = form.cleaned_data
-  			email = data['email']
-  			passwordhash = data['passwordhash']
-  			#if (validateAccount(email, make_password(passwordhash))):
-  			if validateAccount(email, passwordhash):
-  				print ("This account is valid")
-  				request.session['username']= email
-  			else:
-  				form = LoginForm()
-  		else:
-  			form = LoginForm()
-  	else:
-  		form = LoginForm()
+			email = data['email']
+			passwordhash = data['passwordhash']
+			#if (validateAccount(email, make_password(passwordhash))):
+			if validateAccount(email, passwordhash):
+				print ("This account is valid")
+				request.session['username']= email
+			else:
+				form = LoginForm()
+		else:
+			form = LoginForm()
 	context = {'form':form }
 
 	return render(request, "customerlogin.html", context)
@@ -152,7 +150,7 @@ def validateAccount(email, password):
 			+ "WHERE Email='" + email + "';"
 	customercontents = list(Customer.objects.raw(query))
 	for x in customercontents:
-		print x
+		print (x)
 
 	return len(customercontents) > 0
 
@@ -160,19 +158,19 @@ def validateAccount(email, password):
 def loggedIn(request):
 	username = ""
 	try:
-  		username = request.session['username']
-  		print ("Logged in")
-  	except KeyError, e:
-  		print ("Not Logged in")
-  		return False
-  	return True
+		username = request.session['username']
+		print ("Logged in")
+	except KeyError as e:
+		print ("Not Logged in")
+		return False
+	return True
 
 # return the username of the user that is loggedin
 def userlogged(request):
 	username = None
 	try:
   		username = request.session['username']
-  	except KeyError, e:
+	except KeyError as e:
   		pass
-  	return username
+	return username
 
