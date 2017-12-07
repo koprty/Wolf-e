@@ -2,13 +2,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1> Customer Login <h1>
-  <h2>Login</h2>
-  <form method="POST" >
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="button primary" type="submit">Login</button>
-  </form>
+
+<div class="row">
+  <div class="large-6 float-center">
+	  
+	  <h2>Login To Your Account</h2>
+	  <form method="POST" >
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <button class="button primary" type="submit">Login</button>
+	  </form>
+	</div>
+</div>
+
+
+  
 
 {% endblock %}
 

@@ -1,19 +1,51 @@
+{% load static %}
 <html>
     <head>
         <title>Wolf-e</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
+        <link rel="stylesheet" href="{% static "css/wolfie.css" %}">
     </head>
     <body>
+        <div class="docs-sticky-top-bar mobile-hidden">
+            <nav class="global-nav show-for-smedium navbar">
+                <div class="global-nav-title">
+                    <img id="wolfie-logo" src="{% static "img/wolfielogo.png" %}"<strong>Wolf-e</strong>
+                </div>
+                <ul class="dropdown menu right-side" data-dropdown-menu="kbrmpo-dropdown-menu" data-click-open="true" role="menubar">
+                    <li class="menu-item is-dropdown-submenu-parent opens-right" role="menuitem" aria-haspopup="true" aria-label="Showcase">
+                    <a href="http://zurb.com/responsive">Showcase</a></li>
+                    <li class="menu-item" role="menuitem" aria-haspopup="true" aria-label="Showcase">
+                    <a href="http://zurb.com/responsive">Showcase</a></li>
+                    <li class="menu-item" role="menuitem" aria-haspopup="true" aria-label="Showcase">
+                    <a href="http://zurb.com/responsive">Showcase</a></li>
+                </ul>
+                </li>
+                </ul>
+             
+             </nav>
+         </div>
         <div class="page-header">
             <h1><a href="/">Customer Login</a></h1>
         </div>
 
         <div class="content container">
-            <div class="row">
-                <div class="col-md-5">
+        <div class="grid-container fluid">
+          <div class="grid-x grid-margin-x">
+            <div class="cell small-2">cell</div>
+            <div class="cell small-8">
                 {% block content %}
                 {% endblock %}
+            </div>
+            <div class="cell small-2">cell</div>
+          </div>
+        </div>
+            <div class="row">
+                    <div class="small-3 large-4 columns"><!-- ... --></div>
+                    <div class="small-6 large-4 columns">
+                    
+                </div>
+                    <div class="small-3 large-4 columns"><!-- ... --></div>
                 </div>
             </div>
         </div>

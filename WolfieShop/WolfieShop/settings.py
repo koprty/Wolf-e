@@ -126,6 +126,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 
 # If login fails, let us redirect to some plain logout page
 LOGIN_REDIRECT_URL = '/logout'
