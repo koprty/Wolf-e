@@ -40,21 +40,6 @@ CREATE TABLE Review (
 	FOREIGN KEY(CustomerId) REFERENCES Customer(CustomerId)
 );
 
-DELIMITER $$ 
-CREATE TRIGGER update_item_review AFTER INSERT ON Review 
-	FOR EACH ROW  
-BEGIN
-	UPDATE Item 
-	SET Rating = ( 
-		SELECT AVG(Rating) 
-		FROM Review 
-		WHERE Item.ItemId = Review.ItemId 
-		), 
-	NumReviews = NumReviews + 1 
-	WHERE Item.ItemId = Review.ItemId; 
-END;$$ 
-DELIMITER ; 
-
 CREATE TABLE ShoppingCart (
 	ShoppingCartId INTEGER AUTO_INCREMENT, -- added for primary key
 	CustomerId INTEGER,
@@ -89,6 +74,21 @@ CREATE TABLE TransactionContents (
 );
 
 
+DELIMITER $$ 
+CREATE TRIGGER update_item_review AFTER INSERT ON Review 
+	FOR EACH ROW  
+	BEGIN 
+		UPDATE Item,Review 
+		SET Item.Rating = ( 
+				SELECT AVG(r.Rating) 
+				FROM Review r 
+				WHERE Item.ItemId = r.ItemId 
+			), 
+			NumReviews = NumReviews + 1 
+		WHERE Item.ItemId = Review.ItemId; 
+	END; 
+	$$ 
+DELIMITER ; 
 
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
 GRANT ALL PRIVILEGES ON wolfieshop_db.* TO 'lal'@'localhost';
