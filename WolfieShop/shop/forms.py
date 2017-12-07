@@ -3,14 +3,14 @@ from django import forms
 
 
 class CustomerRegisterForm(forms.ModelForm):
-	passwordhash = forms.CharField(widget=forms.PasswordInput)
+	passwordhash = forms.CharField(widget=forms.PasswordInput, label="Password")
 	class Meta:
 		model = Customer
 		fields =["firstname", "lastname", "email", "phonenumber", "passwordhash"]
 		#exclude=("customerid")
 
 class LoginForm(forms.ModelForm):
-	passwordhash = forms.CharField(widget=forms.PasswordInput)
+	passwordhash = forms.CharField(widget=forms.PasswordInput, label="Password")
 	class Meta:
 		model = Customer
 		fields =["email", "passwordhash"]
