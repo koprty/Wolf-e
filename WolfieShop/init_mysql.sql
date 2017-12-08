@@ -87,7 +87,7 @@ CREATE TABLE Shipment (
 	ShipmentId INTEGER AUTO_INCREMENT,
 	TransactionId	INTEGER,
 	Provider	CHAR(20),
-	Type		CHAR(20), -- Types: Standard, Priority, 2-Day, etc
+	Type		CHAR(50), -- Types: Standard, Priority, 2-Day, etc
 	Address	CHAR(50) NOT NULL,
 	Fee		INTEGER, -- Used in calculating total price in a transaction
 	PRIMARY KEY(ShipmentId)

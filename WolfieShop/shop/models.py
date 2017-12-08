@@ -88,7 +88,7 @@ class TransactionOrder(models.Model):
 
 
 class Shipment(models.Model):
-    shipmentid = models.AutoField(db_column='Shipment', primary_key=True)
+    shipmentid = models.AutoField(db_column='ShipmentId', primary_key=True)
     transactionid = models.IntegerField(db_column='TransactionId', primary_key=False, null = True)
     provider = models.CharField(db_column='Provider', blank=True, max_length=20, null=False)
     shipmenttype = models.CharField(db_column='Type', blank=True, max_length=40, null=False, verbose_name="Type")

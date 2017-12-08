@@ -97,32 +97,30 @@ Shopping Cart
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
 	shoppingcart = None
-	subtotal = 0
 	if not loggedIn(request):
 		form = LoginForm()
-		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
 	else:
 		print("else")
 		customer_email = userlogged(request)
 		customer = get_object_or_404(Customer, email=customer_email)
 		try:
 			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
-			
-			# Calculate subtotal
-			for item in shoppingcart:
-				subtotal += item.itemid.price * item.quantity
 		except:
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return render(request, 'shoppingcart.html', context)
 
+
 	context = {
 		'shoppingcart' : shoppingcart,
 	}
-	request.session['subtotal'] = str(subtotal)
 	return render(request, 'shoppingcart.html', context)
 
 def checkout(request):
-	return redirect("/shipping")
+	if (request.method == "POST"):#it should always be post but just checking
+		return redirect("/shipping")
+	else:
+ 		return redirect("/shoppingcart")
+
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
 #customerid, but different items and corresponding quantities.
@@ -254,13 +252,20 @@ def logout(request):
 	return render(request, "logout.html", context)
 
 """ 
-Add Shipment
+Add Shipment - we get to this page only from the shopping cart page for now
 """
 def add_shipping(request):
 	if (loggedIn(request)):
 		if (request.method == "POST"):
-			form = ShipmentForm(request.POST)
+			currShip = getcurrentshipmentid
+			currPay = getcurrentpaymentid
+			if (currShip != None):
+				# Display last shipment info
+				#TODO FOR LATER
+				request.session.ship = ""
+				pass
 			
+			form = ShipmentForm(request.POST)
 			if form.is_valid():
 				data = form.cleaned_data
 				print (data)
@@ -271,6 +276,17 @@ def add_shipping(request):
 				fee = SHIPPING_FEE
 				newShipping = Shipment(provider=provider, shipmenttype=shipmenttype, address=address, fee=fee)
 				newShipping.save()
+
+				if (currShip == None):
+					# Get rid of last shipment info placed and clear session
+					# TODO actually delete the sql row please
+					request.session.ship = ""
+					pass
+				# add the new shipping id into the cookies
+				request.session['ship'] = newShipping.shipmentid
+
+				print ("New Shipping id", request.session['ship'])
+
 				context={}
 				#proceed to the next step of the checkout flow
 				return redirect("/payment")
@@ -323,6 +339,10 @@ def add_payment(request):
 				newPayment = Payment(paytype=paytype, billingaddress=billingaddress, cardnum=cardnum, cardexpire=cardexpire)
 				newPayment.save()
 
+				# add the new payment id into the cookies
+				request.session['pay'] = newPayment.paymentid
+				print ("New payment id", request.session['pay'])
+
 				#proceed to the last step of the checkout flow - confirm order
 				return redirect("/confirm")
 
@@ -342,9 +362,34 @@ def add_payment(request):
 
 def confirm_order(request):
 	context = {}
+	
 
 	if (request.method == "POST"):
 		return redirect("/done",context)
+	else:
+		currShip = getcurrentshipmentid
+		if currShip == None:
+			return redirect('/shipping',context)
+		currPay = getcurrentpaymentid
+		if currShip == None:
+			return redirect('/payment',context)
+
+		# display shopping cart
+		# display shipping info
+		shipp = Shipment.objects.get(shipmentid=getcurrentshipmentid(request))
+		print (shipp)
+		# display payment info
+		payy = Payment.objects.get(paymentid=getcurrentpaymentid(request))
+
+		context = {
+			# 'provider': provider,
+			# 'shipmenttype': shipmenttype,
+			# 'address': address,
+			'shipp':shipp,
+			'payy':payy
+			
+		}
+
 
 	return render(request, "confirm_order.html", context)
 
@@ -401,3 +446,22 @@ def userlogged(request):
 	except KeyError as e:
   		pass
 	return username
+
+# return the shipmentid
+def getcurrentshipmentid(request):
+	username = None
+	try:
+  		username = request.session['ship']
+	except KeyError as e:
+  		pass
+	return username
+
+# return the shipmentid
+def getcurrentpaymentid(request):
+	username = None
+	try:
+  		username = request.session['pay']
+	except KeyError as e:
+  		pass
+	return username
+
