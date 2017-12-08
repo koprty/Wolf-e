@@ -74,7 +74,7 @@ CREATE TABLE TransactionContents (
 );
 
 CREATE TABLE Payment (
-	PaymentId INTEGER,
+	PaymentId INTEGER AUTO_INCREMENT,
 	TransactionId	   INTEGER,
 	Type		   CHAR(10), -- Credit or Debit
 	BillingAddress	   VARCHAR(255),
@@ -84,13 +84,13 @@ CREATE TABLE Payment (
 );
 
 CREATE TABLE Shipment (
-	ShipmentId INTEGER,
+	ShipmentId INTEGER AUTO_INCREMENT,
 	TransactionId	INTEGER,
 	Provider	CHAR(20),
 	Type		CHAR(20), -- Types: Standard, Priority, 2-Day, etc
 	Address	CHAR(50) NOT NULL,
 	Fee		INTEGER, -- Used in calculating total price in a transaction
-	PRIMARY KEY(TransactionId)
+	PRIMARY KEY(ShipmentId)
 );
 
 

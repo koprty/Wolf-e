@@ -252,7 +252,6 @@ def logout(request):
 	return render(request, "logout.html", context)
 
 """ 
-ADD payment
 Add Shipment
 """
 def add_shipping(request):
@@ -263,17 +262,16 @@ def add_shipping(request):
 			if form.is_valid():
 				data = form.cleaned_data
 				print (data)
-				transactionid = -2
 				provider = data['provider']
 				shipmenttype = data['shipmenttype']
 				address = data['address']
 				# We're going to be stupid and make the fee $3 for every transaction
 				fee = SHIPPING_FEE
-				newShipping = Shipment(transactionid=transactionid, provider=provider, shipmenttype=shipmenttype, address=address, fee=fee)
+				newShipping = Shipment(provider=provider, shipmenttype=shipmenttype, address=address, fee=fee)
 				newShipping.save()
 				context={}
 				#proceed to the next step of the checkout flow
-				return render(request, "add_payment.html", context)
+				return redirect("/payment")
 
 			else:
 				form = ShipmentForm()
@@ -289,42 +287,70 @@ def add_shipping(request):
 
 	return render(request, "add_delivery.html", context)
 
+"""
+Add payment
+"""
+
+class PaymentForm(forms.ModelForm):
+	paytype = forms.ChoiceField(choices=[(x,x) for x in ["VISA", "American Express", "Wolfie Wallet"]])
+	class Meta:
+		model = Payment
+		fields = ['paytype', 'billingaddress', 'cardnum', 'cardexpire']
+	def __init__(self, *args, **kwargs):
+		super(PaymentForm, self).__init__(*args, **kwargs)
+		for field in iter(self.fields):
+			self.fields[field].widget.attrs.update({
+				'class': 'form-control'
+			})
+
+
 def add_payment(request):
 	if (loggedIn(request)):
-		next = request.POST.get('next', '/')
-		return redirect(next)
-
 		if (request.method == "POST"):
-			form = LoginForm(request.POST)
+			form = PaymentForm(request.POST)
+			
 			if form.is_valid():
 				data = form.cleaned_data
-				email = data['email']
-				passwordhash = data['passwordhash']
+				print (data)
+				paytype = data['paytype']
+				billingaddress = data['billingaddress']
+				cardnum = data['cardnum']
+				cardexpire = data['cardexpire']
+				# We're going to be stupid and make the fee $3 for every transaction
+				fee = SHIPPING_FEE
+				newPayment = Payment(paytype=paytype, billingaddress=billingaddress, cardnum=cardnum, cardexpire=cardexpire)
+				newPayment.save()
 
-				# if the email and password match an existing user
-				if validateAccount(email, passwordhash):
-					print ("This account is valid")
-					request.session['username']= email
-					request.session['nam']= getAccountName(email, passwordhash)
+				#proceed to the last step of the checkout flow - confirm order
+				return redirect("/confirm")
 
-					# Redirect page to previous page
-					next = request.POST.get('next', '/')
-					return redirect(next)
-				else:
-					# if account is not valid, and password does not match, reload the form
-					context = {'form':form, 'error': "Invalid username or password. Try again!" }
-					form = LoginForm()
 			else:
-				context = {'form':form, 'error': "Invalid Form Data. Try again!" }
-				form = LoginForm()
+				form = PaymentForm()
+				context = {'form':form, 'error': "Invalid Payment Form Data. Try again!" }
+
 		else:
-			form = LoginForm()
-			context = {'form':form }
+			form = PaymentForm()
+			context = {'form':form , 'fee': SHIPPING_FEE}
 	else:
-		form = LoginForm()
-		context = {'form':form , 'message': "Please log in to checkout!"}
-		return render(request, "customerlogin.html", context)
-	return render(request, "customerlogin.html", context)
+		context = {'message': "Please log in to fill your cart and checkout."}
+		next = request.POST.get('next', '/login')
+		return redirect(next, context)
+
+	return render(request, "add_payment.html", context)
+
+def confirm_order(request):
+	context = {}
+
+	if (request.method == "POST"):
+		return redirect("/done",context)
+
+	return render(request, "confirm_order.html", context)
+
+def processed_order(request):
+	context = {}
+	if (request.method == "POST"):
+		return redirect("/",context)
+	return render(request, "confirmed_order.html", context)	
 
 
 #########################################################################################################

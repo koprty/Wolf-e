@@ -71,7 +71,7 @@ class ShipmentForm(forms.ModelForm):
 
 
 class PaymentForm(forms.ModelForm):
-	paytype = forms.ChoiceField(choices=["VISA", "American Express", "WolfieWallet"])
+	paytype = forms.ChoiceField(choices=[(x,x) for x in ["VISA", "American Express", "Wolfie Wallet"]])
 	class Meta:
 		model = Payment
 		fields = ['paytype', 'billingaddress', 'cardnum', 'cardexpire']
