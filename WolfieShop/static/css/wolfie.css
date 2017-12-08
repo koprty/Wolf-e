@@ -2,8 +2,6 @@ nav.global-nav{
 	background-color:#890000;
 }
 
-
-
 img#wolfie-logo{
 	width:80px;
 	height:auto;
@@ -15,4 +13,13 @@ img#wolfie-logo{
 	vertical-align: middle;
 }
 
+#navbarText ul .nav-item{
+	font-size: 1.5em;
+    padding-right: 1em;
+}
 
+
+.content-row-block{
+	margin-top:30px;
+	padding-top:10px;
+}

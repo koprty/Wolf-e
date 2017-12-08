@@ -16,33 +16,23 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</span></a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="login">Login</a>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="ShoppingCart">Shopping Cart</a>
                     </li>
                 </ul>
-                </div>
-            </nav>     
-            <div class="container container-fluid">
-            
-             <div class="row">
-                <div class="col-sm">
             </div>
-            <div class="page-header">
-                <h1><a href="/">Customer Login</a></h1>
+        </nav>     
+        <div class="container container-fluid">
+            <div class="content-row-block">
+                {% block content %}
+                {% endblock %}
             </div>
-                One of three columns
-            </div>
-            <div class="col-sm">
-              {% block content %}
-              {% endblock %}
-            </div>
-            <div class="col-sm">
-              One of three columns
-            </div>
-          </div>
+        </div>
 
         
     </body>

@@ -164,6 +164,10 @@ def customer_register(request):
 
 
 def customer_login(request):
+	if (loggedIn(request)):
+		next = request.POST.get('next', '/')
+		return redirect(next)
+
 	if (request.method == "POST"):
 		form = LoginForm(request.POST)
 		if form.is_valid():
@@ -174,18 +178,19 @@ def customer_login(request):
 			if validateAccount(email, passwordhash):
 				print ("This account is valid")
 				request.session['username']= email
+				# Redirect page to previous page
+				next = request.POST.get('next', '/')
+				return redirect(next)
 			else:
+				# if account is not valid, and password does not match
+				context = {'form':form, 'error': "Invalid username or password. Try again!" }
 				form = LoginForm()
 		else:
+			context = {'form':form, 'error': "Invalid Form Data. Try again!" }
 			form = LoginForm()
-
-		# Redirect page to previous page
-		next = request.POST.get('next', '/')
-		return redirect(next)
 	else:
 		form = LoginForm()
-		
-	context = {'form':form }
+		context = {'form':form, }
 	return render(request, "customerlogin.html", context)
 
 def logout(request):
@@ -204,13 +209,11 @@ def customerExists(email):
 	return len(customercontents) > 0
 
 def validateAccount(email, password):
-	# query = "SELECT * FROM wolfieshop_db.Customer " \
-	# 		+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
 	query = "SELECT * FROM wolfieshop_db.Customer " \
-			+ "WHERE Email='" + email + "';"
+			+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
+	# query = "SELECT * FROM wolfieshop_db.Customer " \
+	# 		+ "WHERE Email='" + email + "';"
 	customercontents = list(Customer.objects.raw(query))
-	for x in customercontents:
-		print (x)
 
 	return len(customercontents) > 0
 
