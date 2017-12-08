@@ -46,6 +46,8 @@ def item_detail(request, item_id):
 		if (request.method == "POST"):
 			if additemform.is_valid() and 'additem' in request.POST:
 				data = additemform.cleaned_data
+				data['quantity'] = request.POST.get('quantity', False)
+				
 				quantity = data['quantity']
 				
 				item = get_object_or_404(Item, itemid=item_id)
