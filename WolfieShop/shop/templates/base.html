@@ -3,23 +3,30 @@
     <head>
         <title>Wolf-e</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-        <!--
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation-float.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css">
-        -->
         <link rel="stylesheet" href="{% static "css/wolfie.css" %}">
-
     </head>
     <body>
-        <div class="container container-fluid">
-            <nav class="global-nav show-for-smedium navbar">
-                <div class="global-nav-title">
-                    <img id="wolfie-logo" src="{% static "img/wolfielogo.png" %}"<strong>Wolf-e</strong>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+            <div class="global-nav-title navbar-text navbar-brand">
+                <img id="wolfie-logo" src="{% static "img/wolfielogo.png" %}"/><span class="navbar-wolf-title">Wolf-e</span>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarText">
+                
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="ShoppingCart">Shopping Cart</a>
+                    </li>
+                </ul>
                 </div>
-               
-             
-             </nav>
-
+            </nav>     
+            <div class="container container-fluid">
+            
              <div class="row">
                 <div class="col-sm">
             </div>
