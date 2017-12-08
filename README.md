@@ -77,7 +77,8 @@
     - Edit quantity
 
 - Add Checkout Flow -> Cart to Transaction  - arjun
-- Add Delivery and Payments - lise
+- Added Delivery and Payments form - lise (need to do more checks for cookies) 
+- Create a detailed confirm order page w/ shopping cart - lise
 
 ## Optional ToDos
 - Customer Profile
@@ -86,6 +87,7 @@
 - add images urls
 - Add item description
 - Notification bubbles when a form is submitted
+- Add shopping cart icon to navbar
 
 ## Todones
 - Login Page with Cookies
@@ -96,4 +98,5 @@
 - Make sure you can't login twice
 - update item quantities upon enacting a transaction
 - Check for duplicate items in shopping cart
+
 
