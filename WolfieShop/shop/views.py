@@ -1,10 +1,11 @@
 from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
-from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder, Customer
+from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder, Customer, Shipment, Payment
 from django import forms
-from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm, SubmitItemForm
+from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm, SubmitItemForm, ShipmentForm, PaymentForm
 from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
 
+SHIPPING_FEE = 3
 """
 Home Page / Index
 """
@@ -242,6 +243,81 @@ def logout(request):
 		pass
 	context = { }
 	return render(request, "logout.html", context)
+
+""" 
+ADD payment
+Add Shipment
+"""
+def add_shipping(request):
+	if (loggedIn(request)):
+		if (request.method == "POST"):
+			form = ShipmentForm(request.POST)
+			
+			if form.is_valid():
+				data = form.cleaned_data
+				print (data)
+				transactionid = -2
+				provider = data['provider']
+				shipmenttype = data['shipmenttype']
+				address = data['address']
+				# We're going to be stupid and make the fee $3 for every transaction
+				fee = SHIPPING_FEE
+				newShipping = Shipment(transactionid=transactionid, provider=provider, shipmenttype=shipmenttype, address=address, fee=fee)
+				newShipping.save()
+				context={}
+				#proceed to the next step of the checkout flow
+				return render(request, "add_payment.html", context)
+
+			else:
+				form = ShipmentForm()
+				context = {'form':form, 'error': "Invalid Shipping Form Data. Try again!" }
+
+		else:
+			form = ShipmentForm()
+			context = {'form':form , 'fee': SHIPPING_FEE}
+	else:
+		context = {'message': "Please log in to fill your cart and checkout"}
+		next = request.POST.get('next', '/login')
+		return redirect(next, context)
+
+	return render(request, "add_delivery.html", context)
+
+def add_payment(request):
+	if (loggedIn(request)):
+		next = request.POST.get('next', '/')
+		return redirect(next)
+
+		if (request.method == "POST"):
+			form = LoginForm(request.POST)
+			if form.is_valid():
+				data = form.cleaned_data
+				email = data['email']
+				passwordhash = data['passwordhash']
+
+				# if the email and password match an existing user
+				if validateAccount(email, passwordhash):
+					print ("This account is valid")
+					request.session['username']= email
+					request.session['nam']= getAccountName(email, passwordhash)
+
+					# Redirect page to previous page
+					next = request.POST.get('next', '/')
+					return redirect(next)
+				else:
+					# if account is not valid, and password does not match, reload the form
+					context = {'form':form, 'error': "Invalid username or password. Try again!" }
+					form = LoginForm()
+			else:
+				context = {'form':form, 'error': "Invalid Form Data. Try again!" }
+				form = LoginForm()
+		else:
+			form = LoginForm()
+			context = {'form':form }
+	else:
+		form = LoginForm()
+		context = {'form':form , 'message': "Please log in to checkout!"}
+		return render(request, "customerlogin.html", context)
+	return render(request, "customerlogin.html", context)
 
 
 #########################################################################################################

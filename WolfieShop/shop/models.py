@@ -85,3 +85,31 @@ class TransactionOrder(models.Model):
     class Meta:
         managed = False
         db_table = 'TransactionOrder'
+
+
+class Shipment(models.Model):
+    shipmentid = models.AutoField(db_column='Shipment', primary_key=True)
+    transactionid = models.IntegerField(db_column='TransactionId', primary_key=False)
+    provider = models.CharField(db_column='Provider', blank=True, max_length=20, null=False)
+    shipmenttype = models.CharField(db_column='Type', blank=True, max_length=40, null=False, verbose_name="Type")
+    address = models.CharField(db_column='Address', blank=True, max_length=200, null=False)
+    fee = models.IntegerField(db_column='Fee', blank=True, null=True)
+
+    #if they cancel transaction, then we should remove the shipment and payment out of the table
+    class Meta:
+        managed = False
+        db_table = 'Shipment'
+
+class Payment(models.Model):
+    paymentid = models.AutoField(db_column='PaymentId', primary_key=True)
+    transactionid = models.IntegerField(db_column='TransactionId', primary_key=False)
+    paytype = models.CharField(db_column='Type', blank=True, max_length=10, null=False)
+    billingaddress = models.CharField(db_column='BillingAddress', max_length=200, blank=True, null=False)
+    cardnum = models.CharField(db_column='CardNumber', blank=True, max_length=16, null=False)
+    cardexpire = models.CharField(db_column='CardExpiryDate', blank=True, max_length=5, null=False)
+    #if they cancel transaction, then we should remove the shipment and payment out of the table
+    class Meta:
+        managed = False
+        db_table = 'Payment'
+
+

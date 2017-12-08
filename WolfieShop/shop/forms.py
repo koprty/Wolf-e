@@ -1,4 +1,4 @@
-from .models import Customer, Review, ShoppingCart
+from .models import Customer, Review, ShoppingCart, Shipment, Payment
 from django import forms
 
 
@@ -54,3 +54,30 @@ class SubmitItemForm(forms.ModelForm):
 		super(SubmitItemForm, self).__init__(*args, **kwargs)
 		self.fields['quantity'] = forms.ChoiceField(choices=[(x, x) for x in range(1, quantinput+1)])
 
+# Add delivery and shipping information to DB
+class ShipmentForm(forms.ModelForm):
+	provider = forms.ChoiceField(choices=[(x,x) for x in ["UPS", "Wolfie Express", "USPS", "FedEx"]])
+	shipmenttype = forms.ChoiceField(choices=[(x,x) for x in ["Standard 5-7 Day Shipping", "2 Day Rush Shipping", "1 Day Express Shipping"]])
+
+	class Meta:
+		model = Shipment
+		fields = ['provider', 'shipmenttype', 'address']
+	def __init__(self, *args, **kwargs):
+		super(ShipmentForm, self).__init__(*args, **kwargs)
+		for field in iter(self.fields):
+			self.fields[field].widget.attrs.update({
+				'class': 'form-control'
+			})
+
+
+class PaymentForm(forms.ModelForm):
+	paytype = forms.ChoiceField(choices=["VISA", "American Express", "WolfieWallet"])
+	class Meta:
+		model = Payment
+		fields = ['paytype', 'billingaddress', 'cardnum', 'cardexpire']
+	def __init__(self, *args, **kwargs):
+		super(PaymentForm, self).__init__(*args, **kwargs)
+		for field in iter(self.fields):
+			self.fields[field].widget.attrs.update({
+				'class': 'form-control'
+			})

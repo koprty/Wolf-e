@@ -73,6 +73,26 @@ CREATE TABLE TransactionContents (
 	CHECK(Quantity > 0)
 );
 
+CREATE TABLE Payment (
+	PaymentId INTEGER,
+	TransactionId	   INTEGER,
+	Type		   CHAR(10), -- Credit or Debit
+	BillingAddress	   VARCHAR(255),
+	CardNumber	   CHAR(16),	-- We are not performing operations, therefore its CHAR not INTEGER
+	CardExpiryDate CHAR(5),	-- In format "XX/XX"
+	PRIMARY KEY(PaymentId)
+);
+
+CREATE TABLE Shipment (
+	ShipmentId INTEGER,
+	TransactionId	INTEGER,
+	Provider	CHAR(20),
+	Type		CHAR(20), -- Types: Standard, Priority, 2-Day, etc
+	Address	CHAR(50) NOT NULL,
+	Fee		INTEGER, -- Used in calculating total price in a transaction
+	PRIMARY KEY(TransactionId)
+);
+
 
 DELIMITER $$ 
 CREATE TRIGGER update_item_review AFTER INSERT ON Review 
