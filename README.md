@@ -65,9 +65,14 @@
 ## Todos
 - FRONTEND - lise for nav bar
 - make sure you can't login twice - lise
-- Insert items into shopping cart - lisa
+- Insert items into shopping cart - lisa / arjun (editing your baby sorry)
+  - keep both submit review form and insert items form on item page
+  - handle actually inserting items into the shopping cart
+  - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out])
+  - have shopping cart properly display items
 - Shopping Cart Profile - 
 - Add Checkout Flow -> Cart to Transaction  - arjun
+  - update item quantities upon enacting a transaction
 - Add Delivery and Payments
 - When we buy insert into shopping cart or buy something we need check quantity 
 
