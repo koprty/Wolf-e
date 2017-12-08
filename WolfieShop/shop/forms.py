@@ -34,7 +34,7 @@ class SubmitReviewForm(forms.ModelForm):
 		model = Review
 		fields=["rating", "reviewtext"]
 	def __init__(self, *args, **kwargs):
-		super(CustomerRegisterForm, self).__init__(*args, **kwargs)
+		super(SubmitReviewForm, self).__init__(*args, **kwargs)
 		for field in iter(self.fields):
 			self.fields[field].widget.attrs.update({
 				'class': 'form-control'

@@ -64,7 +64,6 @@
 
 ## Todos
 - FRONTEND - lise for nav bar
-- make sure you can't login twice - lise
 - Insert items into shopping cart - lisa / arjun (editing your baby sorry)
   - keep both submit review form and insert items form on item page
   - handle actually inserting items into the shopping cart
@@ -73,7 +72,7 @@
 - Shopping Cart Profile - 
 - Add Checkout Flow -> Cart to Transaction  - arjun
   - update item quantities upon enacting a transaction
-- Add Delivery and Payments
+- Add Delivery and Payments - lise
 - When we buy insert into shopping cart or buy something we need check quantity 
 
 ## Optional ToDos
@@ -88,5 +87,6 @@
 - Items
 - Reviews with login 
 - Login makes shopping cart
+- Make sure you can't login twice
 
 

@@ -20,7 +20,9 @@
 {% if request.session.username %}
 		<h2>Please login to submit a review</h2>
 		{% include "create_review.html" %}
+		<h2>Please login to add an item to your shopping cart</h2>
+		{% include "add_item.html" %}
 {% else %}
-	<h2>Please login to submit a review</h2>
+	<h2>Please login to submit a review or add an item to your shopping cart</h2>
 	{% include "customerlogin.html" %}
 {% endif %}
