@@ -97,6 +97,7 @@ Shopping Cart
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
 	shoppingcart = None
+	subtotal = 0
 	if not loggedIn(request):
 		form = LoginForm()
 		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
@@ -106,12 +107,18 @@ def shoppingcart_detail(request):
 		customer = get_object_or_404(Customer, email=customer_email)
 		try:
 			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
-			context = {'shoppingcart' : shoppingcart}
+			
+			# Calculate subtotal
+			for item in shoppingcart:
+				subtotal += item.itemid.price * item.quantity
 		except:
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return render(request, 'shoppingcart.html', context)
 
-
+	context = {
+		'shoppingcart' : shoppingcart,
+	}
+	request.session['subtotal'] = str(subtotal)
 	return render(request, 'shoppingcart.html', context)
 
 def checkout(request):

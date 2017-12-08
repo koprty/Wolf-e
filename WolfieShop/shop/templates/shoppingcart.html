@@ -5,7 +5,8 @@
 <h1 class="display-4">Your Shopping Cart</h1>
 {% if shoppingcart %}
 <hr>
-<form action="" method="POST">
+<form action"" method="POST">
+	{% csrf_token %}
 	<table class="table">
 		<thead>
 			<tr>
@@ -40,14 +41,16 @@
 	</table>
 </form>
 <hr>
-{% if request.session.username %}
+	
+	<b>Subtotal: ${{ request.session.subtotal }}</b>
 	<div id="checkoutbutton">
-		<a class="right-button-link" href="/shoppingcart/checkout"><div type="button submit" class="btn btn-info">Checkout</div></a>
-
+		<a class="right-button-link" href="/shoppingcart/checkout">
+			<div type="button submit" class="btn btn-info">Checkout</div>
+		</a>
 	</div>
-{% endif %}
 
 {% else %}
 {{ error }}
 {% endif %}
+
 {% endblock %}
