@@ -63,9 +63,25 @@
     - TODO: make login and register inaccessible if already loggedin
 
 ## Todos
-- Add a Customer and their Accounts (in progress) 
-- Add a seller
-- Add an Employee who can login
-- Add Transactions
+- FRONTEND - lise for nav bar
+- make sure you can't login twice - lise
+- Insert items into shopping cart - lisa
+- Shopping Cart Profile - 
+- Add Checkout Flow -> Cart to Transaction  - arjun
 - Add Delivery and Payments
-- Create transactions upon checkout, create transactioncontents rows upon transaction based on item inventory
+- When we buy insert into shopping cart or buy something we need check quantity 
+
+## Optional ToDos
+- Customer Profile
+- data stats maybe if we have time in this hacky project
+- Revamp adminstration pages
+- add images urls
+
+## Todones
+- Login Page with Cookies
+- Register Page
+- Items
+- Reviews with login 
+- Login makes shopping cart
+
+
