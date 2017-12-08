@@ -1,0 +1,4 @@
+#!/bin/bash
+mysql -u root -p < reset_mysql.sql
+mysql -u root -p < init_mysql.sql
+mysql -u root -p < data.sql
