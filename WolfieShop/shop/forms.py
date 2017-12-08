@@ -15,21 +15,17 @@ class CustomerRegisterForm(forms.ModelForm):
 				'class': 'form-control'
 			})
 
-		#exclude=("customerid")
-
 class LoginForm(forms.ModelForm):
 	passwordhash = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}), label="Password")
 	class Meta:
 		model = Customer
 		fields =["email", "passwordhash"]
-		#exclude=("customerid")
 	def __init__(self, *args, **kwargs):
 		super(LoginForm, self).__init__(*args, **kwargs)
 		for field in iter(self.fields):
 			self.fields[field].widget.attrs.update({
 				'class': 'form-control'
 			})
-
 
 class SubmitReviewForm(forms.ModelForm):
 	rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
