@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^$', shop_view.index, name='index'),
     url(r'^item/(?P<item_id>[0-9]+)/$', shop_view.item_detail, name='item_detail'),
      url(r'^item/(?P<item_id>[0-9]+)/submit_review/$', shop_view.submit_review, name='submit_review'),
+     #url(r'^item/(?P<item_id>[0-9]+)/add_item/$', shop_view.add_item, name='add_item'),
+
     
     url(r'^shoppingcart/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
     url(r'^transaction/(?P<transaction_id>[0-9]+)/$', shop_view.transaction_detail, name='transaction_detail'),

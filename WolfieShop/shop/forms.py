@@ -46,9 +46,10 @@ class SubmitReviewForm(forms.ModelForm):
 class SubmitItemForm(forms.ModelForm):
 
 	def __init__(self, *args, **kwargs):
-	    quantinput = args[0]['quantity']
-	    super(SubmitItemForm, self).__init__(*args, **kwargs)
-	    self.fields['quantity'] = forms.ChoiceField(choices=[(x, x) for x in range(0, quantinput+1)])
+
+		quantinput = args[0]['quantity']
+		super(SubmitItemForm, self).__init__(*args, **kwargs)
+		self.fields['quantity'] = forms.ChoiceField(choices=[(x, x) for x in range(0, quantinput+1)])
 
 	class Meta:
 		model = ShoppingCart

@@ -1,7 +1,7 @@
 <div id="add_item">
-	<form action="add_item/" method="post">
+	<form action="" method="post">
     	{% csrf_token %}
     	{{ additemform.as_p }}
-		<button type="submit">Add Item to Shopping Cart</button>
+		<button type="submit" name = additem>Add Item to Shopping Cart</button>
 	</form>
 </div>
