@@ -69,6 +69,8 @@
   - handle actually inserting items into the shopping cart
   - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out])
   - have shopping cart properly display items
+  - customer object / item object for customerid / itemid?
+
 - Shopping Cart Profile - 
 - Add Checkout Flow -> Cart to Transaction  - arjun
 - Add Delivery and Payments - lise

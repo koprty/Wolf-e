@@ -36,17 +36,13 @@ def item_detail(request, item_id):
 	# Load review form
 	if loggedIn(request):
 		createreviewform = SubmitReviewForm()
-		#print(item.quantity)
-		#print(request.method)
-		#print("request.POST:")
-		#print(request.POST)
+		#print(item.quantity)#print(request.method)#print(request.POST)
 		data = request.POST.copy()
 		data['quantity'] = item.quantity
 		if item.quantity is None:
 			data['quantity'] = 0#just make it 0 if they didn't input the quantity field, dropdown should give no options
 		additemform = SubmitItemForm(data)
-		#if form.is_valid():
-		    #new_scrow.save()
+
 		if (request.method == "POST"):
 			print(request.POST)
 			if additemform.is_valid() and 'additem' in request.POST:
@@ -105,14 +101,19 @@ Shopping Cart
 """
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
+	shoppingcart = None
 	if not loggedIn(request):
 		form = LoginForm()
+	else:
+		print("else")
+		customer_email = userlogged(request)
+		customer = get_object_or_404(Customer, email=customer_email)
+		try:
+			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+		except:
+			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+			return render(request, 'shoppingcart.html', context)
 
-	
-	customer_email = userlogged(request)
-	customer = get_object_or_404(Customer, email=customer_email)
-
-	shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
 
 	context = {
 		'shoppingcart' : shoppingcart,
@@ -185,8 +186,8 @@ def customer_register(request):
 				#newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=make_password(passwordhash))
 				newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=passwordhash)
 				newCust.save()
-				newSc = ShoppingCart(customerid=newCust)
-				newSc.save()
+				#newSc = ShoppingCart(customerid=newCust)
+				#newSc.save()
 
 				request.session['username']= email
 				request.session['nam']= firstname

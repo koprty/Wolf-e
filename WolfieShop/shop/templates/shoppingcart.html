@@ -1,3 +1,9 @@
+<html>
+<body>
+
+
+<h1>Your Shopping Cart</h1>
+	  	{{ error }}
 {% for shoppingcartrow in shoppingcart %}
 	<h1>{{ shoppingcartrow.shoppingcartid }}</h1><!--this can be removed for customer-visible pages -->
 	<ul>
@@ -6,6 +12,11 @@
 		<li>Quantity: {{ shoppingcartrow.quantity }}</li>
 	</ul>
 {% endfor %}
+
+
+
+</body>
+</html>
 
 <!--
 <div id="reviews">
