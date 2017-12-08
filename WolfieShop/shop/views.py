@@ -41,6 +41,7 @@ def item_detail(request, item_id):
 		if item.quantity is None:
 			data['quantity'] = 0#just make it 0 if they didn't input the quantity field, dropdown should give no options
 		additemform = SubmitItemForm(data)
+
 		if (request.method == "POST"):
 			if additemform.is_valid() and 'additem' in request.POST:
 				data = additemform.cleaned_data
@@ -73,7 +74,6 @@ def item_detail(request, item_id):
 				
 				return redirect("/item/" + item_id)	
 		else:
-			additemform = SubmitItemForm(data)
 			createreviewform = SubmitReviewForm()
 			
 	context = {
@@ -113,6 +113,13 @@ def shoppingcart_detail(request):
 		'shoppingcart' : shoppingcart,
 	}
 	return render(request, 'shoppingcart.html', context)
+
+def checkout(request):
+	if (request.method == "POST"):#it should always be post but just checking
+		return redirect("/shipping")
+	else:
+ 		return redirect("/shoppingcart")
+
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
 #customerid, but different items and corresponding quantities.
