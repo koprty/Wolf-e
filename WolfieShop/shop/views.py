@@ -141,6 +141,8 @@ def customer_register(request):
 				firstname = data['firstname']
 				lastname = data['lastname']
 				phonenumber = data['phonenumber'] 
+				if (phonenumber == None):
+					phonenumber = ""
 				passwordhash = data['passwordhash']
 				query = "INSERT INTO wolfieshop_db.Customer(FirstName, LastName, Email, PhoneNumber, PasswordHash) \
 				VALUES (" +  firstname + "," +  lastname + "," + email + "," + phonenumber + "," + passwordhash + ");" 

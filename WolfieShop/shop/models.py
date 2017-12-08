@@ -65,6 +65,7 @@ class ShoppingCart(models.Model):
 class TransactionContents(models.Model):
     transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)
     transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)
+    #we might not need customer id here
     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
     itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)
     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
