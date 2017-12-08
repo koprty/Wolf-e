@@ -70,9 +70,9 @@
   - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
   - have shopping cart properly display items - done (arjun?)
   - customer object / item object for customerid / itemid?
-  - Check for duplicate items in shopping cart - lisa (working on it)
+  - Check for duplicate items in shopping cart - lisa
 
-- Shopping Cart Profile
+- Shopping Cart Profile - lisa
     - Delete Item
     - Edit quantity
 
