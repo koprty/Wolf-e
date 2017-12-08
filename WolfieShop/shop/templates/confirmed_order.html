@@ -5,9 +5,10 @@
 	<div class="col-sm-2"> </div>
 	<div class="col-sm-7">
 	  <h1>Your order has been confirmed and is on its way!</h1>
-
-	   <a class="right-button-link" href="/"><div type="button " class="btn btn-info">Search for more items here!</div></a>
-
+		<form action="" method="post">
+			{% csrf_token %}
+	   		<button type="button submit" class="btn btn-info btn-lg btn-block">Search for more items here!</button>
+		</form>
 		<!-- insert shopping cart here --> 
 		<!-- insert payment info here --> 
 	</div>

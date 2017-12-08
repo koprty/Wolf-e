@@ -41,7 +41,9 @@ urlpatterns = [
 
 
     url(r'^payment/$', shop_view.add_payment, name='add_payment'),
-    url(r'^shipping/$', shop_view.add_shipping, name='add_shipping')
+    url(r'^shipping/$', shop_view.add_shipping, name='add_shipping'),
+    url(r'^confirm/$', shop_view.confirm_order, name='confirm_order'),
+    url(r'^done/$', shop_view.processed_order, name='processed_order')
 
 
     #obviously access to these sc pages wouldn't actually be given to the customer. The customer would get a page
