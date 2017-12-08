@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, get_list_or_404, render, redirect
 from .models import Item, Review, ShoppingCart, TransactionContents, TransactionOrder, Customer
 from django import forms
-from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm
+from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm, SubmitItemForm
 from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -32,7 +32,19 @@ def item_detail(request, item_id):
 	
 	# Load review form
 	if loggedIn(request):
-		form = SubmitReviewForm()
+		#form = SubmitReviewForm()
+		#print(item.quantity)
+		#print(request.method)
+		#print("request.POST:")
+		#print(request.POST)
+		data = request.POST.copy()
+		data['quantity'] = item.quantity
+		if item.quantity is None:
+			data['quantity'] = 0#just make it 0 if they didn't input the quantity field, dropdown should give no options
+		form = SubmitItemForm(data)
+		#if form.is_valid():
+		    #new_scrow.save()
+		    #also update number of items in the item table, subtracting the quantity specified
 	else:
 		form = LoginForm()
 	
