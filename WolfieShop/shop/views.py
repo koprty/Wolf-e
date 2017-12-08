@@ -46,13 +46,28 @@ def item_detail(request, item_id):
 		if (request.method == "POST"):
 			if additemform.is_valid() and 'additem' in request.POST:
 				data = additemform.cleaned_data
+				data['quantity'] = request.POST.get('quantity', False)
 				quantity = data['quantity']
 				
 				item = get_object_or_404(Item, itemid=item_id)
-				
+			
 				customer_email = userlogged(request)
 				customer = get_object_or_404(Customer, email=customer_email)
 
+				
+				# Check if item exists in cart
+				try:
+					cart_item = ShoppingCart.objects.get(customerid=customer.customerid, itemid=item_id)
+					if cart_item:
+						print("Duplicate Item! Adding quantity to item in cart.")
+						cart_item.quantity = cart_item.quantity + int(quantity)
+						print("New quantity", cart_item.quantity)
+						cart_item.save()
+						return redirect("/shoppingcart")#todo: could just return to item page, and add context for success message
+				except:
+					pass
+				
+				# Otherwise, just add new item to cart
 				new_scrow = ShoppingCart(itemid=item, customerid=customer,quantity=quantity)
 				new_scrow.save()
 	
@@ -83,6 +98,7 @@ def item_detail(request, item_id):
 		'createreviewform' : createreviewform,
 		'additemform' : additemform
 	}
+	
 	return render(request, 'item.html', context)
 
 def get_reviews(item_id):
@@ -464,4 +480,3 @@ def getcurrentpaymentid(request):
 	except KeyError as e:
   		pass
 	return username
-
