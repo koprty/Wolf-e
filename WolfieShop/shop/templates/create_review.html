@@ -1,7 +1,7 @@
 <div id="create_review">
 	<form action="submit_review/" method="post">
     	{% csrf_token %}
-    	{{ form.as_p }}
-		<button type="submit">Submit</button>
+    	{{ createreviewform.as_p }}
+		<button type="submit">Add Review</button>
 	</form>
 </div>
