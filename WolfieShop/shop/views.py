@@ -123,8 +123,11 @@ def get_transactioncontents(transaction_id):
 """
 Customer Registration/Login
 """
-#@transaction.commit_manually
 def customer_register(request):
+	if (loggedIn(request)):
+		print("You don't need to register; you are already logged in as: {0}", userlogged(request))
+		next = request.POST.get('next', '/')
+		return redirect(next)
 	if (request.method == "POST"):
 		form = CustomerRegisterForm(request.POST)
 		if form.is_valid():
@@ -165,6 +168,7 @@ def customer_register(request):
 
 def customer_login(request):
 	if (loggedIn(request)):
+		print("you are already logged in as:", userlogged(request))
 		next = request.POST.get('next', '/')
 		return redirect(next)
 
@@ -174,15 +178,17 @@ def customer_login(request):
 			data = form.cleaned_data
 			email = data['email']
 			passwordhash = data['passwordhash']
-			#if (validateAccount(email, make_password(passwordhash))):
+
+			# if the email and password match an existing user
 			if validateAccount(email, passwordhash):
 				print ("This account is valid")
 				request.session['username']= email
+				
 				# Redirect page to previous page
 				next = request.POST.get('next', '/')
 				return redirect(next)
 			else:
-				# if account is not valid, and password does not match
+				# if account is not valid, and password does not match, reload the form
 				context = {'form':form, 'error': "Invalid username or password. Try again!" }
 				form = LoginForm()
 		else:
@@ -190,9 +196,12 @@ def customer_login(request):
 			form = LoginForm()
 	else:
 		form = LoginForm()
-		context = {'form':form, }
+		context = {'form':form }
 	return render(request, "customerlogin.html", context)
 
+"""
+Customer Logout
+"""
 def logout(request):
 	try:
 		del request.session['username']
@@ -201,13 +210,18 @@ def logout(request):
 	context = { }
 	return render(request, "logout.html", context)
 
-# Helper functions:
+
+#########################################################################################################
+#################################### Helper functions ###################################################
+#########################################################################################################
+# check to see if a customer exists with the email given
 def customerExists(email):
 	query = "SELECT * FROM wolfieshop_db.Customer " \
 			+ "WHERE Email='" + email + "';"
 	customercontents = list(Customer.objects.raw(query))
 	return len(customercontents) > 0
 
+# check to correct login credentials
 def validateAccount(email, password):
 	query = "SELECT * FROM wolfieshop_db.Customer " \
 			+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
