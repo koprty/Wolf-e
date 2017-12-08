@@ -167,6 +167,9 @@ def customer_register(request):
 				newSc = ShoppingCart(customerid=newCust)
 				newSc.save()
 
+				request.session['username']= email
+				request.session['nam']= firstname
+
 				print (email+ " has been saved");
 				return redirect("/")
 			
@@ -195,7 +198,8 @@ def customer_login(request):
 			if validateAccount(email, passwordhash):
 				print ("This account is valid")
 				request.session['username']= email
-				
+				request.session['nam']= getAccountName(email, passwordhash)
+
 				# Redirect page to previous page
 				next = request.POST.get('next', '/')
 				return redirect(next)
@@ -217,6 +221,7 @@ Customer Logout
 def logout(request):
 	try:
 		del request.session['username']
+		del	request.session['nam']
 	except:
 		pass
 	context = { }
@@ -240,8 +245,15 @@ def validateAccount(email, password):
 	# query = "SELECT * FROM wolfieshop_db.Customer " \
 	# 		+ "WHERE Email='" + email + "';"
 	customercontents = list(Customer.objects.raw(query))
-
 	return len(customercontents) > 0
+
+def getAccountName(email, password):
+	query = "SELECT CustomerId, FirstName as name FROM wolfieshop_db.Customer " \
+			+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
+	customercontents = list(Customer.objects.raw(query))
+	print ("HELLO")
+	print (customercontents[0].name)
+	return customercontents[0].name
 
 # boolean function to check to see if someone has been logged in
 def loggedIn(request):

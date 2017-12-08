@@ -11,6 +11,8 @@ img#wolfie-logo{
 	font-size:2em;
 	font-weight:600;
 	vertical-align: middle;
+	padding-left:10px;
+	text-decoration:none;
 }
 
 #navbarText ul .nav-item{
@@ -23,3 +25,24 @@ img#wolfie-logo{
 	margin-top:30px;
 	padding-top:10px;
 }
+
+.hello{
+	font-weight: 800;
+	color:white;
+}
+
+a.wolfie-title{
+	font-weight: 800;
+	color:rgba(255,255,255,.5);
+}
+
+.right-button-link{
+	float:right;
+	text-align: right;
+	margin-right: 0;
+}
+
+a.wolfie-title:visited { text-decoration: none; color:rgba(255,255,255,.5); }
+a.wolfie-title:hover { text-decoration: none; color:rgba(255,255,255,.5); }
+a.wolfie-title:focus { text-decoration: none; color:rgba(255,255,255,.5); }
+a.wolfie-title:hover, a.wolfie-title:active { text-decoration: none; color:rgba(255,255,255,.5);}
