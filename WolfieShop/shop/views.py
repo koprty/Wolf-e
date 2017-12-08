@@ -176,10 +176,14 @@ def customer_login(request):
 				form = LoginForm()
 		else:
 			form = LoginForm()
+
+		# Redirect page to previous page
+		next = request.POST.get('next', '/')
+		return redirect(next)
 	else:
 		form = LoginForm()
+		
 	context = {'form':form }
-
 	return render(request, "customerlogin.html", context)
 
 def logout(request):
