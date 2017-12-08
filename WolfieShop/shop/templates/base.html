@@ -16,14 +16,21 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</span></a>
                     </li>
-
+                    {% if request.session.username|length > 0 %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="">Hello, {{request.session.username}}</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="/shoppingcart">Shopping Cart</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>     
@@ -33,7 +40,5 @@
                 {% endblock %}
             </div>
         </div>
-
-        
     </body>
 </html>
