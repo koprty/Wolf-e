@@ -88,6 +88,15 @@ CREATE TRIGGER update_item_review AFTER INSERT ON Review
 		WHERE Item.ItemId = Review.ItemId; 
 	END; 
 	$$ 
+
+CREATE TRIGGER decrement_quantity_transaction AFTER INSERT ON TransactionContents
+	FOR EACH ROW
+	BEGIN
+		UPDATE Item, TransactionContents
+		SET Item.Quantity = Item.Quantity - TransactionContents.Quantity
+		WHERE Item.ItemId = TransactionContents.ItemId;
+	END;
+	$$
 DELIMITER ; 
 
 CREATE USER 'lal'@'localhost' IDENTIFIED BY 'ALLCSE305<3';
