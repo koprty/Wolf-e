@@ -101,27 +101,28 @@ def shoppingcart_detail(request):
 	shoppingcart = None
 	if not loggedIn(request):
 		form = LoginForm()
+		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
 	else:
-		print("else")
 		customer_email = userlogged(request)
 		customer = get_object_or_404(Customer, email=customer_email)
 		try:
 			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+			context = {'shoppingcart' : shoppingcart}
 		except:
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return render(request, 'shoppingcart.html', context)
 
-
-	context = {
-		'shoppingcart' : shoppingcart,
-	}
 	return render(request, 'shoppingcart.html', context)
 
 def checkout(request):
-	if (request.method == "POST"):#it should always be post but just checking
-		return redirect("/shipping")
-	else:
- 		return redirect("/shoppingcart")
+	return redirect("/shipping")
+
+def shoppingcart_delete(request, customer_id, item_id):
+	#delete the one with the appropriate itemid: https://stackoverflow.com/questions/3805958/how-to-delete-a-record-in-django-models
+	ShoppingCart.objects.filter(customerid = customer_id, itemid = item_id).delete()
+
+	return redirect("/shoppingcart")
+
 
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and

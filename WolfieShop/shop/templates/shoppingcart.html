@@ -29,9 +29,10 @@
 						{{ shoppingcartrow.quantity }}
 					</div>
 					<div class="col">
-						<button type="button submit" name="delete_item" class="btn btn-outline-danger btn-sm">
+						<a class ="right-button-link" href = "/shoppingcart/delete/{{shoppingcartrow.customerid.customerid}}/{{shoppingcartrow.itemid.itemid}}">
+						<div type = "button submit" name="delete_item" class="btn btn-outline-danger btn-sm">
 							<span class="oi oi-trash" title="remove" aria-hidden="true"></span>
-						</button>
+						</div></a>
 					</div>
 				</div>
 			</td>
@@ -44,8 +45,7 @@
 	
 	<b>Subtotal: ${{ request.session.subtotal }}</b>
 	<div id="checkoutbutton">
-		<a class="right-button-link" href="/shoppingcart/checkout">
-			<div type="button submit" class="btn btn-info">Checkout</div>
+		<a class="right-button-link" href="/shoppingcart/checkout"><div type="button submit" class="btn btn-info">Checkout</div>
 		</a>
 	</div>
 

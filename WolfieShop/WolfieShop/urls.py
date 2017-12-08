@@ -27,6 +27,7 @@ urlpatterns = [
     
     url(r'^shoppingcart/$', shop_view.shoppingcart_detail, name='shoppingcart_detail'),
      url(r'^shoppingcart/checkout/$', shop_view.checkout, name='checkout'),
+     url(r'^shoppingcart/delete/(?P<customer_id>[0-9]+)/(?P<item_id>[0-9]+)$', shop_view.shoppingcart_delete, name='shoppingcart_delete'),
 
     url(r'^transaction/(?P<transaction_id>[0-9]+)/$', shop_view.transaction_detail, name='transaction_detail'),
     #given transactionid, want to print info from transactioncontents
