@@ -65,14 +65,14 @@
 ## Todos
 - FRONTEND - lise for nav bar
 - Insert items into shopping cart - lisa / arjun (editing your baby sorry)
-  - keep both submit review form and insert items form on item page - done (lisa)
   - handle actually inserting items into the shopping cart - done (arjun?)
   - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
   - have shopping cart properly display items - done (arjun?)
   - customer object / item object for customerid / itemid?
-  - Check for duplicate items in shopping cart - lisa
 
-- Shopping Cart Profile - lisa
+- Make sure quantity om cart is not exceeding the max quantity of item
+
+- Shopping Cart Profile
     - Delete Item
     - Edit quantity
 
@@ -95,5 +95,5 @@
 - Login makes shopping cart
 - Make sure you can't login twice
 - update item quantities upon enacting a transaction
-
+- Check for duplicate items in shopping cart
 
