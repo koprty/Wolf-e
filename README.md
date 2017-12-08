@@ -64,23 +64,28 @@
 
 ## Todos
 - FRONTEND - lise for nav bar
-- Insert items into shopping cart - arjun (editing your baby sorry)
-  - keep both submit review form and insert items form on item page
-  - handle actually inserting items into the shopping cart
-  - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out])
-  - have shopping cart properly display items
+- Insert items into shopping cart - lisa / arjun (editing your baby sorry)
+  - keep both submit review form and insert items form on item page - done (lisa)
+  - handle actually inserting items into the shopping cart - done (arjun?)
+  - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
+  - have shopping cart properly display items - done (arjun?)
   - customer object / item object for customerid / itemid?
+  - Check for duplicate items in shopping cart - lisa (working on it)
 
-- Shopping Cart Profile - 
+- Shopping Cart Profile
+    - Delete Item
+    - Edit quantity
+
 - Add Checkout Flow -> Cart to Transaction  - arjun
 - Add Delivery and Payments - lise
-- When we buy insert into shopping cart or buy something we need check quantity 
 
 ## Optional ToDos
 - Customer Profile
 - data stats maybe if we have time in this hacky project
 - Revamp adminstration pages
 - add images urls
+- Add item description
+- Notification bubbles when a form is submitted
 
 ## Todones
 - Login Page with Cookies

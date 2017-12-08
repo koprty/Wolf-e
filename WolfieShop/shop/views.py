@@ -30,21 +30,18 @@ def item_detail(request, item_id):
 	item = get_object_or_404(Item, itemid=item_id)
 	reviews = get_reviews(item_id)
 	
-	form = None
-	createreviewform = None
 	additemform = None
-	# Load review form
+	createreviewform = None
+
+	# Load Forms
 	if loggedIn(request):
-		createreviewform = SubmitReviewForm()
-		#print(item.quantity)#print(request.method)#print(request.POST)
 		data = request.POST.copy()
+		
 		data['quantity'] = item.quantity
 		if item.quantity is None:
 			data['quantity'] = 0#just make it 0 if they didn't input the quantity field, dropdown should give no options
 		additemform = SubmitItemForm(data)
-
 		if (request.method == "POST"):
-			print(request.POST)
 			if additemform.is_valid() and 'additem' in request.POST:
 				data = additemform.cleaned_data
 				quantity = data['quantity']
@@ -58,13 +55,30 @@ def item_detail(request, item_id):
 				new_scrow.save()
 	
 				return redirect("/shoppingcart")#todo: could just return to item page, and add context for success message
-	else:
-		form = LoginForm()#fix this - doesn't work anymore, need more checking
 	
+		
+			createreviewform = SubmitReviewForm(data)
+			if createreviewform.is_valid() and 'submit_review' in request.POST:
+				data = createreviewform.cleaned_data
+				rating = data['rating']
+				reviewtext = data['reviewtext']
+				
+				item = get_object_or_404(Item, itemid=item_id)
+				
+				customer_email = userlogged(request)
+				customer = get_object_or_404(Customer, email=customer_email)
+	
+				new_review = Review(itemid=item, customerid=customer,rating=rating,reviewtext=reviewtext)
+				new_review.save()
+				
+				return redirect("/item/" + item_id)	
+		else:
+			additemform = SubmitItemForm(data)
+			createreviewform = SubmitReviewForm()
+			
 	context = {
 		'item' : item,
 		'reviews' : reviews,
-		'form' : form,
 		'createreviewform' : createreviewform,
 		'additemform' : additemform
 	}
@@ -76,26 +90,6 @@ def get_reviews(item_id):
 	reviews = Review.objects.raw(query)
 	return reviews
 
-def submit_review(request, item_id):
-	if (request.method == "POST"):
-		form = SubmitReviewForm(request.POST)
-		if form.is_valid():
-			data = form.cleaned_data
-			rating = data['rating']
-			reviewtext = data['reviewtext']
-			
-			item = get_object_or_404(Item, itemid=item_id)
-			
-			customer_email = userlogged(request)
-			customer = get_object_or_404(Customer, email=customer_email)
-
-			new_review = Review(itemid=item, customerid=customer,rating=rating,reviewtext=reviewtext)
-			new_review.save()
-	
-	return redirect("/item/" + item_id)
-	
-#def add_item(request, item_id):#see urls and add_item.html
-	
 """
 Shopping Cart
 """

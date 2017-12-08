@@ -33,6 +33,7 @@ class SubmitReviewForm(forms.ModelForm):
 	class Meta:
 		model = Review
 		fields=["rating", "reviewtext"]
+		
 	def __init__(self, *args, **kwargs):
 		super(SubmitReviewForm, self).__init__(*args, **kwargs)
 		for field in iter(self.fields):
@@ -44,13 +45,12 @@ class SubmitReviewForm(forms.ModelForm):
 #https://stackoverflow.com/questions/2237064/passing-arguments-to-a-dynamic-form-in-django
 #https://stackoverflow.com/questions/46137883/pass-extra-parameters-to-django-model-forms-along-with-request-post
 class SubmitItemForm(forms.ModelForm):
-
-	def __init__(self, *args, **kwargs):
-
-		quantinput = args[0]['quantity']
-		super(SubmitItemForm, self).__init__(*args, **kwargs)
-		self.fields['quantity'] = forms.ChoiceField(choices=[(x, x) for x in range(0, quantinput+1)])
-
 	class Meta:
 		model = ShoppingCart
 		fields=["quantity"]
+		
+	def __init__(self, *args, **kwargs):
+		quantinput = args[0]['quantity']
+		super(SubmitItemForm, self).__init__(*args, **kwargs)
+		self.fields['quantity'] = forms.ChoiceField(choices=[(x, x) for x in range(1, quantinput+1)])
+

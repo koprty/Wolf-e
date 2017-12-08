@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <h1>{{ item.itemname }}</h1>
 <ul>
 	<li>Quantity: {{ item.quantity }}</li>
@@ -7,22 +10,26 @@
 	<li>Number of Reviews: {{ item.numreviews }}</li>
 </ul>
 <hr>
+{% if request.session.username %}
+		<h2>Buy {{ item.itemname }}</h2>
+		{% include "add_item.html" %}
+		<hr>
+		<h2>Leave A Review!</h2>
+		{% include "create_review.html" %}
+{% else %}
+	<h2>Please login to add {{ item.itemname }} to your shopping cart or submit a review.</h2>
+{% endif %}
+<hr>
 <div id="reviews">
 	<h1>Reviews</h1>
 	{% for review in reviews %}
 		<h2> {{review.rating}} / 5 </h2>
 		<p> {{review.reviewtext}} </p>
-		<p> - {{review.customerid.firstname}} {{review.customerid.lastname}}</p>
+		<i> - {{review.customerid.firstname}} {{review.customerid.lastname}}</i>
 		<hr>
+	{% empty %}
+		<p> No reviews. </p>
 	{% endfor %}
 </div>
-<hr>
-{% if request.session.username %}
-		<h2>Please login to submit a review</h2>
-		{% include "create_review.html" %}
-		<h2>Please login to add an item to your shopping cart</h2>
-		{% include "add_item.html" %}
-{% else %}
-	<h2>Please login to submit a review or add an item to your shopping cart</h2>
-	{% include "customerlogin.html" %}
-{% endif %}
+
+{% endblock %}
