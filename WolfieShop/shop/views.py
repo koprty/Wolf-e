@@ -99,28 +99,23 @@ def shoppingcart_detail(request):
 	shoppingcart = None
 	if not loggedIn(request):
 		form = LoginForm()
+		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
 	else:
 		print("else")
 		customer_email = userlogged(request)
 		customer = get_object_or_404(Customer, email=customer_email)
 		try:
 			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+			context = {'shoppingcart' : shoppingcart}
 		except:
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return render(request, 'shoppingcart.html', context)
 
 
-	context = {
-		'shoppingcart' : shoppingcart,
-	}
 	return render(request, 'shoppingcart.html', context)
 
 def checkout(request):
-	if (request.method == "POST"):#it should always be post but just checking
-		return redirect("/shipping")
-	else:
- 		return redirect("/shoppingcart")
-
+	return redirect("/shipping")
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
 #customerid, but different items and corresponding quantities.

@@ -42,7 +42,8 @@
 <hr>
 {% if request.session.username %}
 	<div id="checkoutbutton">
-		<button type="submit" name = "checkout" action="checkout/" method="post"> Checkout</button>
+		<a class="right-button-link" href="/shoppingcart/checkout"><div type="button submit" class="btn btn-info">Checkout</div></a>
+
 	</div>
 {% endif %}
 
