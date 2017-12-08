@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+	<div class="col-sm-2"> </div>
+	<div class="col-sm-7">
+	  <h1>Add Payment Information</h1>
+	  <div class="alert alert-warning" role="alert">
+	  	{{ error }}
+	  </div>
+	  <form method="POST">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <button  class="btn btn-primary" type="button submit">Add Payment</button> 
+	    <a class="right-button-link" href="/register"><div type="button " class="btn btn-info">Register for a New Account</div></a>
+	  </form>
+
+	</div>
+	<div class="col-sm-2"> </div>
+	</div>
+</div>
+
+{% endblock %}
