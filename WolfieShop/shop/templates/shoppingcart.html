@@ -1,29 +1,47 @@
-<html>
-<body>
+{% extends 'base.html' %}
+{% block content %}
 
 
-<h1>Your Shopping Cart</h1>
-	  	{{ error }}
-{% for shoppingcartrow in shoppingcart %}
-	<h1>{{ shoppingcartrow.shoppingcartid }}</h1><!--this can be removed for customer-visible pages -->
-	<ul>
-		<li>CustomerId: {{ shoppingcartrow.customerid }}</li>
-		<li>ItemId: {{ shoppingcartrow.itemid }}</li>
-		<li>Quantity: {{ shoppingcartrow.quantity }}</li>
-	</ul>
-{% endfor %}
-
-
-
-</body>
-</html>
-
-<!--
-<div id="reviews">
-	<h1>Reviews</h1>
-	{% for sc in scs %}
-		<h2> {{review.rating}} / 5 </h2>
-		<p> {{review.reviewtext}} </p>
+<h1 class="display-4">Your Shopping Cart</h1>
+{% if shoppingcart %}
+<hr>
+<form action"" method="POST">
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Item</th>
+				<th scope="col">Price</th>
+				<th scope="col">Quantity</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+	{% for shoppingcartrow in shoppingcart %}
+		<tr>
+			<td>
+				<a href=""><b>{{ shoppingcartrow.itemid.itemname }}</b></a>
+			</td>
+			<td>${{ shoppingcartrow.itemid.price }}</td>
+			<td>
+				<div class="row">
+					<div class="col">
+						{{ shoppingcartrow.quantity }}
+					</div>
+					<div class="col">
+						<button type="button submit" name="delete_item" class="btn btn-outline-danger btn-sm">
+							<span class="oi oi-trash" title="remove" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+			</td>
+		</tr>
 	{% endfor %}
-</div>
--->
+		</tbody>
+	</table>
+</form>
+<hr>
+
+{% else %}
+{{ error }}
+{% endif %}
+{% endblock %}
