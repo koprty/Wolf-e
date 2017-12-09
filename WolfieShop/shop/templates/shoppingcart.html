@@ -45,7 +45,10 @@
 	
 	<b>Subtotal: ${{ request.session.subtotal }}</b>
 	<div id="checkoutbutton">
-		<a class="right-button-link" href="/shoppingcart/checkout"><div type="button submit" class="btn btn-info">Checkout</div>
+		<form action="" method="POST">
+			{% csrf_token %}
+			<button type="button submit" class="right-button-link btn btn-info">Checkout</button>
+		</form>
 		</a>
 	</div>
 

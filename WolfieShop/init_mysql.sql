@@ -67,7 +67,7 @@ CREATE TABLE TransactionContents (
 	CustomerId	INTEGER,
 	ItemId INTEGER,   -- Set value - points to to an item in the item table
 	Quantity INTEGER,   -- This is dependent on ItemId
-	PricePerItem INTEGER,   -- This is dependent on ItemId
+	PricePerItem DECIMAL(9,2),   -- This is dependent on ItemId
 	PRIMARY KEY(TransactionContentsId),
 	CHECK(PricePerItem >= 0), 
 	CHECK(Quantity > 0)
@@ -89,7 +89,7 @@ CREATE TABLE Shipment (
 	Provider	CHAR(20),
 	Type		CHAR(50), -- Types: Standard, Priority, 2-Day, etc
 	Address	CHAR(50) NOT NULL,
-	Fee		INTEGER, -- Used in calculating total price in a transaction
+	Fee		DECIMAL(9,2), -- Used in calculating total price in a transaction
 	PRIMARY KEY(ShipmentId)
 );
 

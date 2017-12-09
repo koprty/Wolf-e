@@ -4,6 +4,7 @@ from django import forms
 from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm, SubmitItemForm, ShipmentForm, PaymentForm
 from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
+from datetime import datetime, date, time
 
 SHIPPING_FEE = 3
 """
@@ -124,26 +125,36 @@ Shopping Cart
 """
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
+	context = {}
 	shoppingcart = None
 	subtotal = 0
 	if not loggedIn(request):
 		form = LoginForm()
 		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
 	else:
-		customer_email = userlogged(request)
-		customer = get_object_or_404(Customer, email=customer_email)
-		try:
-			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
-			
-			# Calculate subtotal
-			for item in shoppingcart:
-				subtotal += item.itemid.price * item.quantity
-			request.session['subtotal'] = str(subtotal)
+		if request.method != "POST":
+			customer_email = userlogged(request)
+			customer = get_object_or_404(Customer, email=customer_email)
+			try:
+				shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+				
+				# Calculate subtotal
+				for item in shoppingcart:
+					subtotal += item.itemid.price * item.quantity
+				request.session['subtotal'] = str(subtotal)
 
-			context = {'shoppingcart' : shoppingcart}
-		except:
-			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
-			return render(request, 'shoppingcart.html', context)
+				context = {'shoppingcart' : shoppingcart}
+			except:
+				context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+				return render(request, 'shoppingcart.html', context)
+		else:
+			currShip = getcurrentshipmentid(request)
+			if currShip == None:
+				return redirect('/shipping',context)
+			currPay = getcurrentpaymentid(request)
+			if currShip == None:
+				return redirect('/payment',context)
+			return redirect('/confirm',context)
 
 	return render(request, 'shoppingcart.html', context)
 
@@ -170,7 +181,7 @@ def get_shoppingcart(shoppingcart_id):
 #Note that the table is set valued across certain fields, so multiple rows may be returned.
 def get_shoppingcart_fromcust(customer_id):
 	query = "SELECT * FROM wolfieshop_db.ShoppingCart " \
-		+ "WHERE CustomerId=" + customer_id + ";"
+		+ "WHERE CustomerId=" + str(customer_id) + ";"
 	scrows = ShoppingCart.objects.raw(query)
 	return scrows
 
@@ -248,11 +259,12 @@ def customer_register(request):
 				#newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=make_password(passwordhash))
 				newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=passwordhash)
 				newCust.save()
-				#newSc = ShoppingCart(customerid=newCust)
-				#newSc.save()
 
 				request.session['username']= email
 				request.session['nam']= firstname
+
+				customer = get_object_or_404(Customer, email=email)
+				request.session['customer']= customer.customerid
 
 				print (email+ " has been saved");
 				return redirect("/")
@@ -283,6 +295,9 @@ def customer_login(request):
 				print ("This account is valid")
 				request.session['username']= email
 				request.session['nam']= getAccountName(email, passwordhash)
+				customer = get_object_or_404(Customer, email=email)
+				request.session['customer']= customer.customerid
+				print(request.session['customer'])
 
 				# Redirect page to previous page
 				next = request.POST.get('next', '/')
@@ -422,35 +437,81 @@ def add_payment(request):
 
 def confirm_order(request):
 	context = {}
-	
-
 	if (request.method == "POST"):
+		# confirm the order
+		# Create a new transaction
+
+
+# #
+# class TransactionContents(models.Model):
+#     transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)
+#     transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)
+#     #we might not need customer id here
+#     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
+#     itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)
+#     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
+#     priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'TransactionContents'
+
+
+# class TransactionOrder(models.Model):
+#     transactionid = models.AutoField(db_column='TransactionId', primary_key=True)
+#     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
+#     totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)
+#     dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)
+
+#     class Meta:
+#         managed = False
+#         db_table = 'TransactionOrder'
+# #
+		print (request.session)
+		customer_id = str(request.session['customer'])
+		dateprocessed = datetime.now()
+		subt = float(request.session['subtotal'])
+		print (dateprocessed, subt)
+
+		newTransaction = TransactionOrder(customerid = customer_id, totalprice = str(subt), dateprocessed = dateprocessed )
+		newTransaction.save()
+
+		transactionid = newTransaction.transactionid
+
+		shopping = get_list_or_404(ShoppingCart, customerid = customer_id)
+
+		for x in shopping:
+			item = get_object_or_404(Item, itemid = x.itemid.itemid )
+			price = item.price
+			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = item.quantity, priceperitem = price )
+			newtransactionConts.save()
+
 		return redirect("/done",context)
 	else:
-		currShip = getcurrentshipmentid
+		currShip = getcurrentshipmentid(request)
 		if currShip == None:
 			return redirect('/shipping',context)
-		currPay = getcurrentpaymentid
+		currPay = getcurrentpaymentid(request)
 		if currShip == None:
 			return redirect('/payment',context)
 
 		# display shopping cart
+		customer_id = request.session['customer']
+		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer_id)
+
 		# display shipping info
-		shipp = Shipment.objects.get(shipmentid=getcurrentshipmentid(request))
-		print (shipp)
+		shipp = Shipment.objects.get(shipmentid=currShip)
+
 		# display payment info
-		payy = Payment.objects.get(paymentid=getcurrentpaymentid(request))
+		payy = Payment.objects.get(paymentid=currPay)
 
 		context = {
 			# 'provider': provider,
 			# 'shipmenttype': shipmenttype,
-			# 'address': address,
+			'shoppingcart': shoppingcart,
 			'shipp':shipp,
 			'payy':payy
-			
 		}
-
-
 	return render(request, "confirm_order.html", context)
 
 def processed_order(request):
@@ -483,8 +544,6 @@ def getAccountName(email, password):
 	query = "SELECT CustomerId, FirstName as name FROM wolfieshop_db.Customer " \
 			+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
 	customercontents = list(Customer.objects.raw(query))
-	print ("HELLO")
-	print (customercontents[0].name)
 	return customercontents[0].name
 
 # boolean function to check to see if someone has been logged in
@@ -502,25 +561,25 @@ def loggedIn(request):
 def userlogged(request):
 	username = None
 	try:
-  		username = request.session['username']
+		username = request.session['username']
 	except KeyError as e:
-  		pass
+		pass
 	return username
 
 # return the shipmentid
 def getcurrentshipmentid(request):
 	username = None
 	try:
-  		username = request.session['ship']
+		username = request.session['ship']
 	except KeyError as e:
-  		pass
+		pass
 	return username
 
 # return the shipmentid
 def getcurrentpaymentid(request):
 	username = None
 	try:
-  		username = request.session['pay']
+		username = request.session['pay']
 	except KeyError as e:
-  		pass
+		pass
 	return username
