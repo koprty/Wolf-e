@@ -155,12 +155,16 @@ def shoppingcart_detail(request):
 				context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 				return render(request, 'shoppingcart.html', context)
 		else:
+
 			currShip = getcurrentshipmentid(request)
 			if currShip == None:
 				return redirect('/shipping',context)
 			currPay = getcurrentpaymentid(request)
 			if currShip == None:
 				return redirect('/payment',context)
+
+			customer_id = request.session['customer']
+			print (emptyCart(customer_id))
 			return redirect('/confirm',context)
 
 	return render(request, 'shoppingcart.html', context)
@@ -344,7 +348,7 @@ Add Shipment - we get to this page only from the shopping cart page for now
 """
 def add_shipping(request):
 	if (loggedIn(request)):
-		if (request.method == "POST"):
+		if (request.method == "POST" ):
 			currShip = getcurrentshipmentid
 			currPay = getcurrentpaymentid
 			if (currShip != None):
@@ -601,11 +605,8 @@ def clearShoppingCart(customerid):
 def emptyCart(customerid):
 	customer = get_object_or_404(Customer, customerid=customerid)
 	try:
-		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
-		# Calculate subtotal just for testing
-		for item in shoppingcart:
-			subtotal += item.itemid.price * item.quantity
-		return len(shoppingcart) == 0
+		shoppingcart = get_list_or_404(ShoppingCart, customerid = customerid)
+		return False
 	except:
 		context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 		return True
