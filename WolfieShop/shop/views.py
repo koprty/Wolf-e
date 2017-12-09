@@ -223,9 +223,12 @@ def transaction_history(request):
 	for i in transorders:
 		tempcontents = get_list_or_404(TransactionContents, transactionid = i.transactionid)
 		print(len(tempcontents))
-		#for i in tempcontents:
-			#print(i.itemid)
-		transcontents.append( (i, tempcontents) )
+		contentsandnames = []
+		for j in range(len(tempcontents) ):
+			itemid = tempcontents[j].itemid
+			name = get_object_or_404(Item, itemid = itemid).itemname
+			contentsandnames[j] = (tempcontents[j], name)
+		transcontents.append( (i, contentsandnames) )
 	#transcontents is now a list of lists where each element is a single transaction
 	print(transcontents)
 	transhist = transcontents
@@ -448,7 +451,7 @@ def confirm_order(request):
 		# confirm the order
 		# check to see if the shopping cart is empty
 		customer_id = str(request.session['customer'])
-		
+
 		if emptyCart(customer_id):
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return redirect("/shoppingcart")
@@ -602,7 +605,11 @@ def emptyCart(customerid):
 		# Calculate subtotal just for testing
 		for item in shoppingcart:
 			subtotal += item.itemid.price * item.quantity
+<<<<<<< HEAD
 		return len(shoppingcart) == 0
+=======
+		return False
+>>>>>>> e107292a713da49c22d885f1be8fd308317d7a1f
 	except:
 		context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 		return True
