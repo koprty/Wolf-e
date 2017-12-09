@@ -446,8 +446,12 @@ def confirm_order(request):
 	context = {}
 	if (request.method == "POST"):
 		# confirm the order
-		# check to see if items are not overloaded
+		# check to see if the shopping cart is empty
 		customer_id = str(request.session['customer'])
+	
+
+		# check to see if items are not overloaded
+		#customer_id = str(request.session['customer'])
 		shopping = get_list_or_404(ShoppingCart, customerid = customer_id)
 
 		for x in shopping:
