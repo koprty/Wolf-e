@@ -63,10 +63,9 @@
     - TODO: make login and register inaccessible if already loggedin
 
 ## Todos
-- remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
-- customer object / item object for customerid / itemid?
+- remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun)
 
-- Shopping Cart Profile
+- Shopping Cart Profile - almost done
     - Edit quantity
 
 - Added Delivery and Payments form - lise (need to do more checks for cookies) 
