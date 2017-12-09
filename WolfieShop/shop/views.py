@@ -179,6 +179,11 @@ def shoppingcart_delete(request, customer_id, item_id):
 
 	return redirect("/shoppingcart")
 
+def sc_delete_sql(request, customer_id, item_id):
+	query = "DELETE FROM wolfieshop_db.ShoppingCart " \
+			+ "WHERE CustomerId='" + customer_id + " AND PasswordHash=" + item_id + "';"
+	scrows = Customer.objects.raw(query)
+	return scrows
 
 
 #get all rows corresponding to the shoppingcart_id. THese rows should have the same shoppingcartid and
