@@ -47,7 +47,9 @@ def item_detail(request, item_id):
 		if (request.method == "POST"):
 			if additemform.is_valid() and 'additem' in request.POST:
 				data = additemform.cleaned_data
+				
 				data['quantity'] = request.POST.get('quantity', False)
+				print(data['quantity'])
 				quantity = data['quantity']
 				
 				item = get_object_or_404(Item, itemid=item_id)
@@ -415,52 +417,34 @@ def confirm_order(request):
 	context = {}
 	if (request.method == "POST"):
 		# confirm the order
-		# Create a new transaction
+		# check to see if items are not overloaded
+		customer_id = str(request.session['customer'])
+		shopping = get_list_or_404(ShoppingCart, customerid = customer_id)
+
+		for x in shopping:
+			item = get_object_or_404(Item, itemid = x.itemid.itemid )
+			cart_item = ShoppingCart.objects.get(customerid=customer_id, itemid=item.itemid)
+			if cart_item.quantity > item.quantity:
+				print ("overloaded.. :( ")
+				return redirect("/shoppingcart",context)
 
 
-# #
-# class TransactionContents(models.Model):
-#     transactioncontentsid = models.AutoField(db_column='TransactionContentsId', primary_key=True)
-#     transactionid = models.IntegerField(db_column='TransactionId', blank=True, null=True)
-#     #we might not need customer id here
-#     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
-#     itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)
-#     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
-#     priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)
-
-#     class Meta:
-#         managed = False
-#         db_table = 'TransactionContents'
-
-
-# class TransactionOrder(models.Model):
-#     transactionid = models.AutoField(db_column='TransactionId', primary_key=True)
-#     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
-#     totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)
-#     dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)
-
-#     class Meta:
-#         managed = False
-#         db_table = 'TransactionOrder'
-# #
-		print (request.session)
 		customer_id = str(request.session['customer'])
 		dateprocessed = datetime.now()
 		subt = float(request.session['subtotal'])
-		print (dateprocessed, subt)
 
 		newTransaction = TransactionOrder(customerid = customer_id, totalprice = str(subt), dateprocessed = dateprocessed )
 		newTransaction.save()
 
 		transactionid = newTransaction.transactionid
 
-		shopping = get_list_or_404(ShoppingCart, customerid = customer_id)
-
 		for x in shopping:
 			item = get_object_or_404(Item, itemid = x.itemid.itemid )
 			price = item.price
 			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = item.quantity, priceperitem = price )
 			newtransactionConts.save()
+
+		clearShoppingCart(customer_id)
 
 		return redirect("/done",context)
 	else:
@@ -559,3 +543,15 @@ def getcurrentpaymentid(request):
 	except KeyError as e:
 		pass
 	return username
+
+
+
+# clear shopping cart
+def clearShoppingCart(customerid):
+	try:
+		ShoppingCart.objects.filter(customerid=customerid).delete()
+		print ("YAY cleared")
+	except KeyError as e:
+		print("boo")
+		pass
+	
