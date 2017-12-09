@@ -6,10 +6,10 @@
 {% if transhist %}
 <hr>
 
-{% for transaction in transhist %}
+{% for transactionorder, transactionconts in transhist %}
 <ul>
-<li>Date Processed: {{ transaction.dateprocessed }}</li>
-<li>Total Price: {{transaction.totalprice}}</li>
+	<li>Date Processed: {{ transactionorder.dateprocessed }}</li>
+	<li>Total Price: ${{transactionorder.totalprice}}</li>
 </ul>
 <table class="table">
 	<thead>
@@ -21,16 +21,16 @@
 	</thead>
 	<tbody>
 		
-{% for transactionrow in transaction %}
+{% for transactioncrow in transactionconts %}
 	<tr>
 		<td>
-			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ transactionrow.itemid.itemname }}</b></a>
+			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ transactioncrow.itemid.itemname }}</b></a>
 		</td>
-		<td>${{ transactionrow.itemid.price }}</td>
+		<td>${{ transactioncrow.priceperitem }}</td>
 		<td>
 			<div class="row">
 				<div class="col">
-					{{ transactionrow.quantity }}
+					{{ transactioncrow.quantity }}
 				</div>
 			</div>
 		</td>

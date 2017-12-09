@@ -62,7 +62,7 @@
     - OR you can manually check the sessions attribute of each request
     - TODO: make login and register inaccessible if already loggedin
 
-## Todos
+## Todos -> todones
 - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun)
 
 - Shopping Cart Profile - almost done
@@ -71,7 +71,13 @@
 - Added Delivery and Payments form - lise (need to do more checks for cookies) 
 - Create a detailed confirm order page w/ shopping cart - lise
 
-- Add order history page
+## Todos
+- edit quantity
+- finish checkout/transaction/transactioncontents flow
+- transaction/order history page
+- testing!
+- documentation
+- presentation
 
 ## Optional ToDos
 - Customer Profile
