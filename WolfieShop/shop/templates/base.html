@@ -19,7 +19,7 @@
                 <ul class="navbar-nav ml-auto">
                     {% if request.session.username|length > 0 %}
                     <li class="nav-item">
-                        <a class="nav-link hello" href="">Hello, {{request.session.nam}}</a>
+                        <a class="nav-link hello" href="/transaction/history">Hello, {{request.session.nam}}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/shoppingcart">Shopping Cart</a>

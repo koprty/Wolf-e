@@ -21,10 +21,10 @@
 	</thead>
 	<tbody>
 		
-{% for transactioncrow, itemname in transactioncontsandnames %}
+{% for transactioncrow, itemname, traitemid in transactioncontsandnames %}
 	<tr>
 		<td>
-			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ itemname }}</b></a>
+			<a href="/item/{{traitemid}}"><b>{{ itemname }}</b></a>
 		</td>
 		<td>${{ transactioncrow.priceperitem }}</td>
 		<td>

@@ -5,6 +5,7 @@ from .forms import CustomerRegisterForm, LoginForm, SubmitReviewForm, SubmitItem
 from django.db import transaction
 from django.contrib.auth.hashers import make_password, check_password
 from datetime import datetime, date, time
+import pytz
 
 SHIPPING_FEE = 3
 """
@@ -231,7 +232,7 @@ def transaction_history(request):
 		for j in range(len(tempcontents) ):
 			itemid = tempcontents[j].itemid
 			name = get_object_or_404(Item, itemid = itemid).itemname
-			contentsandnames[j] = (tempcontents[j], name)
+			contentsandnames.append( (tempcontents[j], name, itemid) )
 		transcontents.append( (i, contentsandnames) )
 	#transcontents is now a list of lists where each element is a single transaction
 	print(transcontents)
@@ -476,7 +477,7 @@ def confirm_order(request):
 				return redirect("/shoppingcart",context)
 
 		customer_id = str(request.session['customer'])
-		dateprocessed = datetime.now()
+		dateprocessed = datetime.now(pytz.timezone('US/Eastern'))
 		subt = float(request.session['subtotal'])
 
 		newTransaction = TransactionOrder(customerid = customer_id, totalprice = str(subt), dateprocessed = dateprocessed )
