@@ -456,7 +456,7 @@ def confirm_order(request):
 		# check to see if the shopping cart is empty
 		customer_id = str(request.session['customer'])
 
-		if emptyCart(customer_id):
+		if emptyCart(customer_id) :
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return redirect("/shoppingcart")
 
@@ -491,8 +491,11 @@ def confirm_order(request):
 
 		return redirect("/done",context)
 	else:
+
 		customer_id = request.session['customer']
-		if emptyCart(customer_id):
+		if emptyCart(customer_id) and request.method == "GET":
+			print ("hj", 'confirm' not in request.POST)
+
 			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 			return redirect("/shoppingcart")
 		currShip = getcurrentshipmentid(request)
@@ -590,7 +593,6 @@ def getcurrentpaymentid(request):
 	except KeyError as e:
 		pass
 	return username
-
 
 
 # clear shopping cart

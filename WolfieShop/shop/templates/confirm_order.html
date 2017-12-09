@@ -105,7 +105,7 @@
 				{% csrf_token %}
 				
 				{% if shipp.provider|length > 0  and payy.paytype|length > 0  %}
-				<button class="btn btn-primary btn-lg btn-block" type="button submit">Confirm Order and Process!</button> 
+				<button class="btn btn-primary btn-lg btn-block" type="button submit" name="confirm">Confirm Order and Process!</button> 
 				{% else %}
 				Please finish adding the require details in order for us to process your order!
 				<button class="btn btn-primary btn-lg btn-block" type="button submit" disabled>Confirm Order and Process!</button> 
