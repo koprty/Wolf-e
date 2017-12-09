@@ -605,11 +605,7 @@ def emptyCart(customerid):
 		# Calculate subtotal just for testing
 		for item in shoppingcart:
 			subtotal += item.itemid.price * item.quantity
-<<<<<<< HEAD
 		return len(shoppingcart) == 0
-=======
-		return False
->>>>>>> e107292a713da49c22d885f1be8fd308317d7a1f
 	except:
 		context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
 		return True
