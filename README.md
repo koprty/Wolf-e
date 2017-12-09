@@ -61,7 +61,7 @@
   - Dev Notes, you can find if a customer has been logged in by calling the loggedin() function <- right now returns a boolean if loggedin or not
     - OR you can manually check the sessions attribute of each request
 
-## Todos
+## Todones
 - Login Page with Cookies
 - Register Page
 - Items
