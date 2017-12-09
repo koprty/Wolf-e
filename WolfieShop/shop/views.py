@@ -448,7 +448,11 @@ def confirm_order(request):
 		# confirm the order
 		# check to see if the shopping cart is empty
 		customer_id = str(request.session['customer'])
-	
+		
+		print("LKJSDF")
+		if emptyCart(customer_id):
+			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+			return render(request, 'shoppingcart.html', context)
 
 		# check to see if items are not overloaded
 		#customer_id = str(request.session['customer'])
@@ -481,6 +485,10 @@ def confirm_order(request):
 
 		return redirect("/done",context)
 	else:
+		customer_id = request.session['customer']
+		if emptyCart(customer_id):
+			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+			return render(request, 'shoppingcart.html', context)
 		currShip = getcurrentshipmentid(request)
 		if currShip == None:
 			return redirect('/shipping',context)
@@ -489,7 +497,7 @@ def confirm_order(request):
 			return redirect('/payment',context)
 
 		# display shopping cart
-		customer_id = request.session['customer']
+		#customer_id = request.session['customer']
 		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer_id)
 
 		# display shipping info
@@ -588,3 +596,14 @@ def clearShoppingCart(customerid):
 		print("boo")
 		pass
 	
+def emptyCart(customerid):
+	customer = get_object_or_404(Customer, customerid=customerid)
+	try:
+		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+		# Calculate subtotal just for testing
+		for item in shoppingcart:
+			subtotal += item.itemid.price * item.quantity
+		return False
+	except:
+		context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+		return True
