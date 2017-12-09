@@ -20,7 +20,7 @@
 	{% for shoppingcartrow in shoppingcart %}
 		<tr>
 			<td>
-				<a href=""><b>{{ shoppingcartrow.itemid.itemname }}</b></a>
+				<a href="/item/{{shoppingcartrow.itemid.itemid}}"><b>{{ shoppingcartrow.itemid.itemname }}</b></a>
 			</td>
 			<td>${{ shoppingcartrow.itemid.price }}</td>
 			<td>

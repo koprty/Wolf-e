@@ -63,22 +63,16 @@
     - TODO: make login and register inaccessible if already loggedin
 
 ## Todos
-- FRONTEND - lise for nav bar
-- Insert items into shopping cart - lisa / arjun (editing your baby sorry)
-  - handle actually inserting items into the shopping cart - done (arjun?)
-  - remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
-  - have shopping cart properly display items - done (arjun?)
-  - customer object / item object for customerid / itemid?
-
-- Make sure quantity om cart is not exceeding the max quantity of item
+- remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun?)
+- customer object / item object for customerid / itemid?
 
 - Shopping Cart Profile
-    - Delete Item
     - Edit quantity
 
-- Add Checkout Flow -> Cart to Transaction  - arjun
 - Added Delivery and Payments form - lise (need to do more checks for cookies) 
 - Create a detailed confirm order page w/ shopping cart - lise
+
+- Add order history page
 
 ## Optional ToDos
 - Customer Profile
@@ -98,5 +92,5 @@
 - Make sure you can't login twice
 - update item quantities upon enacting a transaction
 - Check for duplicate items in shopping cart
-
+- Checkout flow -> Transaction
 

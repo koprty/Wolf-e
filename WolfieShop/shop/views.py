@@ -61,7 +61,19 @@ def item_detail(request, item_id):
 					if cart_item:
 						print("Duplicate Item! Adding quantity to item in cart.")
 						cart_item.quantity = cart_item.quantity + int(quantity)
-						print("New quantity", cart_item.quantity)
+						
+						# Check if quantity is greater than max and show error
+						if cart_item.quantity > item.quantity:
+							createreviewform = SubmitReviewForm()
+							context = {
+								'item' : item,
+								'reviews' : reviews,
+								'createreviewform' : createreviewform,
+								'additemform' : additemform,
+								'error': "Item exceeds maximum quantity in your shopping cart."
+							}
+							return render(request, 'item.html', context)
+							
 						cart_item.save()
 						return redirect("/shoppingcart")#todo: could just return to item page, and add context for success message
 				except:
@@ -114,6 +126,7 @@ Shopping Cart
 def shoppingcart_detail(request):
 	context = {}
 	shoppingcart = None
+	subtotal = 0
 	if not loggedIn(request):
 		form = LoginForm()
 		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
@@ -123,6 +136,12 @@ def shoppingcart_detail(request):
 			customer = get_object_or_404(Customer, email=customer_email)
 			try:
 				shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+				
+				# Calculate subtotal
+				for item in shoppingcart:
+					subtotal += item.itemid.price * item.quantity
+				request.session['subtotal'] = str(subtotal)
+
 				context = {'shoppingcart' : shoppingcart}
 			except:
 				context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
@@ -135,8 +154,6 @@ def shoppingcart_detail(request):
 			if currShip == None:
 				return redirect('/payment',context)
 			return redirect('/confirm',context)
-
-		
 
 	return render(request, 'shoppingcart.html', context)
 

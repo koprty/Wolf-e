@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% if error %}
+<div class="alert alert-danger" role="alert">
+  <strong>Error!</strong> {{ error }}
+</div>
+{% endif %}
+
 <h1>{{ item.itemname }}</h1>
 <ul>
 	<li>Quantity: {{ item.quantity }}</li>
