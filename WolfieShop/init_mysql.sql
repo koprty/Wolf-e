@@ -54,7 +54,7 @@ CREATE TABLE ShoppingCart (
 CREATE TABLE TransactionOrder ( -- can't be named transaction
 	TransactionId INTEGER AUTO_INCREMENT,
 	CustomerId INTEGER,
-	TotalPrice INTEGER,
+	TotalPrice DECIMAL(9,2),
 	DateProcessed DATETIME,
 	PRIMARY KEY(TransactionId),
 	CHECK (TotalPrice >= 0)  -- we may give free stuff 
