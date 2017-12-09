@@ -441,7 +441,7 @@ def confirm_order(request):
 		for x in shopping:
 			item = get_object_or_404(Item, itemid =  x.itemid.itemid  )
 			shopitem = ShoppingCart.objects.get(customerid=customer_id, itemid=item.itemid)
-			
+
 			price = item.price
 			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = shopitem.quantity, priceperitem = price )
 			newtransactionConts.save()

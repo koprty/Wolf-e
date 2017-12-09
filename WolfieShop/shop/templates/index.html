@@ -1,20 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
 
 <h1>Welcome to WolfieShop</h1>
 
 <h3>Books</h3>
-<ul>
-	{% for item in books %}
-		<li>
-			<a href="{% url 'item_detail' item.itemid %}">{{ item.itemname }}</a>
-			<ul>
-				<li>Price: {{ item.price}}</li>
-			</ul>
-		</li>
-	{% endfor %}
-</ul>
 
+	<table class="table">
+  
+  <tbody>
+  	{% for item in books %}
+    <tr>
+      <td><a href="{% url 'item_detail' item.itemid %}">{{ item.itemname }}</a></td>
+      
+
+      <td>{% with ''|center:item.rating as range %}
+      {% for i in range %}
+      <img src="{% static "/open-iconic/svg/star.svg" %}"/>
+      {% endfor %}
+      {% endwith %}</td>
+       <td>{{item.numreviews}} Reviews</td>
+      <td>Price: ${{item.price}}</td>
+    </tr>
+	{% endfor %}
+
+<!-- 
 <h3>Stationery</h3>
 <ul>
 	{% for item in stationery %}
@@ -40,5 +51,5 @@
 		</li>
 	{% endfor %}
 </ul>
-
+ -->
 {% endblock %}
