@@ -338,6 +338,11 @@ def logout(request):
 	try:
 		del request.session['username']
 		del	request.session['nam']
+		del	request.session['customer']
+
+		del	request.session['ship']
+		del	request.session['pay']
+		del	request.session['subtotal']
 	except:
 		pass
 	context = { }
@@ -487,7 +492,7 @@ def confirm_order(request):
 			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = shopitem.quantity, priceperitem = price )
 			newtransactionConts.save()
 
-		clearShoppingCart(customer_id)
+		clearShoppingCart(request,customer_id)
 
 		return redirect("/done",context)
 	else:
@@ -596,10 +601,12 @@ def getcurrentpaymentid(request):
 
 
 # clear shopping cart
-def clearShoppingCart(customerid):
+def clearShoppingCart(request, customerid):
 	try:
 		ShoppingCart.objects.filter(customerid=customerid).delete()
-		print ("YAY cleared")
+		del	request.session['ship']
+		del	request.session['pay']
+		del	request.session['subtotal']
 	except KeyError as e:
 		print("boo")
 		pass
