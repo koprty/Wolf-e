@@ -112,19 +112,31 @@ Shopping Cart
 """
 #editing to only display your shopping cart
 def shoppingcart_detail(request):
+	context = {}
 	shoppingcart = None
 	if not loggedIn(request):
 		form = LoginForm()
 		context = {'shoppingcart': None, 'error': "Please login to view your shopping cart."}
 	else:
-		customer_email = userlogged(request)
-		customer = get_object_or_404(Customer, email=customer_email)
-		try:
-			shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
-			context = {'shoppingcart' : shoppingcart}
-		except:
-			context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
-			return render(request, 'shoppingcart.html', context)
+		if request.method != "POST":
+			customer_email = userlogged(request)
+			customer = get_object_or_404(Customer, email=customer_email)
+			try:
+				shoppingcart = get_list_or_404(ShoppingCart, customerid = customer)
+				context = {'shoppingcart' : shoppingcart}
+			except:
+				context = {'shoppingcart': None, 'error': "Your Shopping Cart is empty. Visit item pages to add items."}
+				return render(request, 'shoppingcart.html', context)
+		else:
+			currShip = getcurrentshipmentid(request)
+			if currShip == None:
+				return redirect('/shipping',context)
+			currPay = getcurrentpaymentid(request)
+			if currShip == None:
+				return redirect('/payment',context)
+			return redirect('/confirm',context)
+
+		
 
 	return render(request, 'shoppingcart.html', context)
 
@@ -386,10 +398,10 @@ def confirm_order(request):
 	if (request.method == "POST"):
 		return redirect("/done",context)
 	else:
-		currShip = getcurrentshipmentid
+		currShip = getcurrentshipmentid(request)
 		if currShip == None:
 			return redirect('/shipping',context)
-		currPay = getcurrentpaymentid
+		currPay = getcurrentpaymentid(request)
 		if currShip == None:
 			return redirect('/payment',context)
 
@@ -398,10 +410,10 @@ def confirm_order(request):
 		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer_id)
 
 		# display shipping info
-		shipp = Shipment.objects.get(shipmentid=getcurrentshipmentid(request))
+		shipp = Shipment.objects.get(shipmentid=currShip)
 
 		# display payment info
-		payy = Payment.objects.get(paymentid=getcurrentpaymentid(request))
+		payy = Payment.objects.get(paymentid=currPay)
 
 		context = {
 			# 'provider': provider,
@@ -409,10 +421,7 @@ def confirm_order(request):
 			'shoppingcart': shoppingcart,
 			'shipp':shipp,
 			'payy':payy
-			
 		}
-
-
 	return render(request, "confirm_order.html", context)
 
 def processed_order(request):
