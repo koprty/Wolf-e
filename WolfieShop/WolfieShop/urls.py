@@ -31,6 +31,7 @@ urlpatterns = [
 
     url(r'^transaction/(?P<transaction_id>[0-9]+)/$', shop_view.transaction_detail, name='transaction_detail'),
     #given transactionid, want to print info from transactioncontents
+    url(r'^transaction/history/$', shop_view.transaction_history, name='transaction_history'),
 
     # this is for admin login... we will use this to make the login page prettier later if we have time
     url(r'^login/$', shop_view.customer_login, name='customer_login'),

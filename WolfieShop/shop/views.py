@@ -209,7 +209,34 @@ def get_transactioncontents(transaction_id):
 	transactioncontents = TransactionContents.objects.raw(query)
 	return transactioncontents
 
+def transaction_history(request):
+	if not loggedIn(request):
+		context = {'transhist': None, 'error': "Please login to view your transaction history."}
+	else:
+		customer_email = userlogged(request)
+		customer = get_object_or_404(Customer, email=customer_email)
+	#try:
+	transorders = get_list_or_404(TransactionOrder, customerid = customer.customerid)
+	transcontents = []
+	print(len(transorders) )
 
+	for i in transorders:
+		tempcontents = get_list_or_404(TransactionContents, transactionid = i.transactionid)
+		print(len(tempcontents))
+		#for i in tempcontents:
+			#print(i.itemid)
+		transcontents.append( (i, tempcontents) )
+	#transcontents is now a list of lists where each element is a single transaction
+	print(transcontents)
+	transhist = transcontents
+	
+	context = {'transhist' : transhist}
+	#except:
+		#context = {'transhist': None, 'error': "Your Transaction History is empty."}
+		#return render(request, 'transaction_history.html', context)
+
+
+	return render(request, 'transaction_history.html', context)
 """
 Customer Registration/Login
 """

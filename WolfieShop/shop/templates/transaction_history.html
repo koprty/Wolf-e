@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1 class="display-4">Your Transaction History</h1>
+{% if transhist %}
+<hr>
+
+{% for transactionorder, transactionconts in transhist %}
+<ul>
+	<li>Date Processed: {{ transactionorder.dateprocessed }}</li>
+	<li>Total Price: ${{transactionorder.totalprice}}</li>
+</ul>
+<table class="table">
+	<thead>
+		<tr>
+			<th scope="col">Item</th>
+			<th scope="col">Price</th>
+			<th scope="col">Quantity</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+{% for transactioncrow in transactionconts %}
+	<tr>
+		<td>
+			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ transactioncrow.itemid.itemname }}</b></a>
+		</td>
+		<td>${{ transactioncrow.priceperitem }}</td>
+		<td>
+			<div class="row">
+				<div class="col">
+					{{ transactioncrow.quantity }}
+				</div>
+			</div>
+		</td>
+	</tr>
+{% endfor %}
+	</tbody>
+</table>
+{% endfor %}
+
+<hr>
+	
+
+{% else %}
+{{ error }}
+{% endif %}
+
+{% endblock %}
