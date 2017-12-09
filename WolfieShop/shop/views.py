@@ -223,9 +223,12 @@ def transaction_history(request):
 	for i in transorders:
 		tempcontents = get_list_or_404(TransactionContents, transactionid = i.transactionid)
 		print(len(tempcontents))
-		#for i in tempcontents:
-			#print(i.itemid)
-		transcontents.append( (i, tempcontents) )
+		contentsandnames = []
+		for j in range(len(tempcontents) ):
+			itemid = tempcontents[j].itemid
+			name = get_object_or_404(Item, itemid = itemid).itemname
+			contentsandnames[j] = (tempcontents[j], name)
+		transcontents.append( (i, contentsandnames) )
 	#transcontents is now a list of lists where each element is a single transaction
 	print(transcontents)
 	transhist = transcontents

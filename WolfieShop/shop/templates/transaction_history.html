@@ -4,12 +4,12 @@
 
 <h1 class="display-4">Your Transaction History</h1>
 {% if transhist %}
-<hr>
 
-{% for transactionorder, transactionconts in transhist %}
+{% for transactionorder, transactioncontsandnames in transhist %}
+<hr style="width: 100%; color: black; height: 1px; background-color:red;" />
 <ul>
-	<li>Date Processed: {{ transactionorder.dateprocessed }}</li>
-	<li>Total Price: ${{transactionorder.totalprice}}</li>
+	<h5>Date Processed: {{ transactionorder.dateprocessed }}</h5>
+	<h6>Total Price: ${{transactionorder.totalprice}}</h6>
 </ul>
 <table class="table">
 	<thead>
@@ -21,10 +21,10 @@
 	</thead>
 	<tbody>
 		
-{% for transactioncrow in transactionconts %}
+{% for transactioncrow, itemname in transactioncontsandnames %}
 	<tr>
 		<td>
-			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ transactioncrow.itemid.itemname }}</b></a>
+			<a href="/item/{{transactionrow.itemid.itemid}}"><b>{{ itemname }}</b></a>
 		</td>
 		<td>${{ transactioncrow.priceperitem }}</td>
 		<td>
