@@ -394,16 +394,19 @@ def confirm_order(request):
 			return redirect('/payment',context)
 
 		# display shopping cart
+		customer_id = request.session['customer']
+		shoppingcart = get_list_or_404(ShoppingCart, customerid = customer_id)
+
 		# display shipping info
 		shipp = Shipment.objects.get(shipmentid=getcurrentshipmentid(request))
-		print (shipp)
+
 		# display payment info
 		payy = Payment.objects.get(paymentid=getcurrentpaymentid(request))
 
 		context = {
 			# 'provider': provider,
 			# 'shipmenttype': shipmenttype,
-			# 'address': address,
+			'shoppingcart': shoppingcart,
 			'shipp':shipp,
 			'payy':payy
 			
