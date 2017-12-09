@@ -60,35 +60,8 @@
 - We keep track of a customer's login session
   - Dev Notes, you can find if a customer has been logged in by calling the loggedin() function <- right now returns a boolean if loggedin or not
     - OR you can manually check the sessions attribute of each request
-    - TODO: make login and register inaccessible if already loggedin
-
-## Todos -> todones
-- remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun)
-
-- Shopping Cart Profile - almost done
-    - Edit quantity
-
-- Added Delivery and Payments form - lise (need to do more checks for cookies) 
-- Create a detailed confirm order page w/ shopping cart - lise
 
 ## Todos
-- edit quantity
-- finish checkout/transaction/transactioncontents flow
-- transaction/order history page
-- testing!
-- documentation
-- presentation
-
-## Optional ToDos
-- Customer Profile
-- data stats maybe if we have time in this hacky project
-- Revamp adminstration pages
-- add images urls
-- Add item description
-- Notification bubbles when a form is submitted
-- Add shopping cart icon to navbar
-
-## Todones
 - Login Page with Cookies
 - Register Page
 - Items
@@ -98,4 +71,23 @@
 - update item quantities upon enacting a transaction
 - Check for duplicate items in shopping cart
 - Checkout flow -> Transaction
+- edit quantity
+- finish checkout/transaction/transactioncontents flow
+- transaction/order history page
+- testing!
+- documentation
+- presentation
+- remove the shopping cart row in SQL created when you log in (no need for it, just display an empty shopping cart [logged in] or error [logged out]) - done (arjun)
+- Shopping Cart Profile - almost done
+    - Edit quantity
+- Added Delivery and Payments form - lise (need to do more checks for cookies) 
+- Create a detailed confirm order page w/ shopping cart - lise
 
+## The future
+- Customer Profile
+- data stats maybe if we have time in this hacky project
+- Revamp adminstration pages
+- add images urls
+- Add item description
+- Notification bubbles when a form is submitted
+- Add shopping cart icon to navbar
