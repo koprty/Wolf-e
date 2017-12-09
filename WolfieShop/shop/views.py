@@ -205,11 +205,12 @@ def customer_register(request):
 				#newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=make_password(passwordhash))
 				newCust = Customer(firstname=firstname, lastname=lastname, email=email, phonenumber=phonenumber, passwordhash=passwordhash)
 				newCust.save()
-				#newSc = ShoppingCart(customerid=newCust)
-				#newSc.save()
 
 				request.session['username']= email
 				request.session['nam']= firstname
+
+				customer = get_object_or_404(Customer, email=email)
+				request.session['customer']= customer.customerid
 
 				print (email+ " has been saved");
 				return redirect("/")
@@ -240,6 +241,9 @@ def customer_login(request):
 				print ("This account is valid")
 				request.session['username']= email
 				request.session['nam']= getAccountName(email, passwordhash)
+				customer = get_object_or_404(Customer, email=email)
+				request.session['customer']= customer.customerid
+				print(request.session['customer'])
 
 				# Redirect page to previous page
 				next = request.POST.get('next', '/')
@@ -379,8 +383,6 @@ def add_payment(request):
 
 def confirm_order(request):
 	context = {}
-	
-
 	if (request.method == "POST"):
 		return redirect("/done",context)
 	else:
@@ -440,8 +442,6 @@ def getAccountName(email, password):
 	query = "SELECT CustomerId, FirstName as name FROM wolfieshop_db.Customer " \
 			+ "WHERE Email='" + email + "' AND PasswordHash='" + password + "';"
 	customercontents = list(Customer.objects.raw(query))
-	print ("HELLO")
-	print (customercontents[0].name)
 	return customercontents[0].name
 
 # boolean function to check to see if someone has been logged in
