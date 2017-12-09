@@ -69,7 +69,7 @@ class TransactionContents(models.Model):
     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
     itemid = models.IntegerField(db_column='ItemId', blank=True, null=True)
     quantity = models.IntegerField(db_column='Quantity', blank=True, null=True)
-    priceperitem = models.IntegerField(db_column='PricePerItem', blank=True, null=True)
+    priceperitem = models.DecimalField(max_digits=10,decimal_places=2,db_column='PricePerItem', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -79,7 +79,7 @@ class TransactionContents(models.Model):
 class TransactionOrder(models.Model):
     transactionid = models.AutoField(db_column='TransactionId', primary_key=True)
     customerid = models.IntegerField(db_column='CustomerId', blank=True, null=True)
-    totalprice = models.IntegerField(db_column='TotalPrice', blank=True, null=True)
+    totalprice = models.DecimalField(max_digits=10,decimal_places=2,db_column='TotalPrice', blank=True, null=True)
     dateprocessed = models.DateTimeField(db_column='DateProcessed', blank=True, null=True)
 
     class Meta:
@@ -93,7 +93,7 @@ class Shipment(models.Model):
     provider = models.CharField(db_column='Provider', blank=True, max_length=20, null=False)
     shipmenttype = models.CharField(db_column='Type', blank=True, max_length=40, null=False, verbose_name="Type")
     address = models.CharField(db_column='Address', blank=True, max_length=200, null=False)
-    fee = models.IntegerField(db_column='Fee', blank=True, null=True)
+    fee = models.DecimalField(max_digits=10,decimal_places=2,db_column='Fee', blank=True, null=True)
 
     #if they cancel transaction, then we should remove the shipment and payment out of the table
     class Meta:
