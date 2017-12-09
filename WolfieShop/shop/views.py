@@ -225,28 +225,26 @@ def transaction_history(request):
 	else:
 		customer_email = userlogged(request)
 		customer = get_object_or_404(Customer, email=customer_email)
-	#try:
-	transorders = get_list_or_404(TransactionOrder, customerid = customer.customerid)
-	transcontents = []
-	print(len(transorders) )
+	try:
+		transorders = get_list_or_404(TransactionOrder, customerid = customer.customerid)
+		transcontents = []
 
-	for i in transorders:
-		tempcontents = get_list_or_404(TransactionContents, transactionid = i.transactionid)
-		print(len(tempcontents))
-		contentsandnames = []
-		for j in range(len(tempcontents) ):
-			itemid = tempcontents[j].itemid
-			name = get_object_or_404(Item, itemid = itemid).itemname
-			contentsandnames.append( (tempcontents[j], name, itemid) )
-		transcontents.append( (i, contentsandnames) )
-	#transcontents is now a list of lists where each element is a single transaction
-	print(transcontents)
-	transhist = transcontents
-	
-	context = {'transhist' : transhist}
-	#except:
-		#context = {'transhist': None, 'error': "Your Transaction History is empty."}
-		#return render(request, 'transaction_history.html', context)
+		for i in transorders:
+			tempcontents = get_list_or_404(TransactionContents, transactionid = i.transactionid)
+			print(len(tempcontents))
+			contentsandnames = []
+			for j in range(len(tempcontents) ):
+				itemid = tempcontents[j].itemid
+				name = get_object_or_404(Item, itemid = itemid).itemname
+				contentsandnames.append( (tempcontents[j], name, itemid) )
+			transcontents.append( (i, contentsandnames) )
+		#transcontents is now a list of lists where each element is a single transaction
+		transhist = transcontents
+		
+		context = {'transhist' : transhist}
+	except:
+		context = {'transhist': None, 'error': "Your Transaction History is empty."}
+		return render(request, 'transaction_history.html', context)
 
 
 	return render(request, 'transaction_history.html', context)
