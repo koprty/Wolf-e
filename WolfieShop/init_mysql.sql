@@ -112,9 +112,9 @@ CREATE TRIGGER update_item_review AFTER INSERT ON Review
 CREATE TRIGGER decrement_quantity_transaction AFTER INSERT ON TransactionContents
 	FOR EACH ROW
 	BEGIN
-		UPDATE Item, TransactionContents
-		SET Item.Quantity = Item.Quantity - TransactionContents.Quantity
-		WHERE Item.ItemId = TransactionContents.ItemId;
+		UPDATE Item
+		SET Item.Quantity = Item.Quantity - NEW.Quantity
+		WHERE Item.ItemId = NEW.ItemId;
 	END;
 	$$
 DELIMITER ; 

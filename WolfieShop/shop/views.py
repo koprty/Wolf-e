@@ -49,8 +49,13 @@ def item_detail(request, item_id):
 				data = additemform.cleaned_data
 				
 				data['quantity'] = request.POST.get('quantity', False)
+				
 				print(data['quantity'])
+
 				quantity = data['quantity']
+
+				print("uuu", quantity)
+
 				
 				item = get_object_or_404(Item, itemid=item_id)
 			
@@ -374,7 +379,6 @@ class PaymentForm(forms.ModelForm):
 				'class': 'form-control'
 			})
 
-
 def add_payment(request):
 	if (loggedIn(request)):
 		if (request.method == "POST"):
@@ -382,7 +386,6 @@ def add_payment(request):
 			
 			if form.is_valid():
 				data = form.cleaned_data
-				print (data)
 				paytype = data['paytype']
 				billingaddress = data['billingaddress']
 				cardnum = data['cardnum']
@@ -394,7 +397,6 @@ def add_payment(request):
 
 				# add the new payment id into the cookies
 				request.session['pay'] = newPayment.paymentid
-				print ("New payment id", request.session['pay'])
 
 				#proceed to the last step of the checkout flow - confirm order
 				return redirect("/confirm")
@@ -425,9 +427,7 @@ def confirm_order(request):
 			item = get_object_or_404(Item, itemid = x.itemid.itemid )
 			cart_item = ShoppingCart.objects.get(customerid=customer_id, itemid=item.itemid)
 			if cart_item.quantity > item.quantity:
-				print ("overloaded.. :( ")
 				return redirect("/shoppingcart",context)
-
 
 		customer_id = str(request.session['customer'])
 		dateprocessed = datetime.now()
@@ -439,9 +439,11 @@ def confirm_order(request):
 		transactionid = newTransaction.transactionid
 
 		for x in shopping:
-			item = get_object_or_404(Item, itemid = x.itemid.itemid )
+			item = get_object_or_404(Item, itemid =  x.itemid.itemid  )
+			shopitem = ShoppingCart.objects.get(customerid=customer_id, itemid=item.itemid)
+			
 			price = item.price
-			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = item.quantity, priceperitem = price )
+			newtransactionConts = TransactionContents(transactionid = transactionid, customerid = customer_id, itemid = item.itemid, quantity = shopitem.quantity, priceperitem = price )
 			newtransactionConts.save()
 
 		clearShoppingCart(customer_id)
