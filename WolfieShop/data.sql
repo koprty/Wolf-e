@@ -40,7 +40,6 @@ LOCK TABLES `Review` WRITE;
 INSERT INTO `Review` VALUES (2,6, 3, 3, 'This is an amazing product, but is way overpriced.');
 UNLOCK TABLES;
 
-
 LOCK TABLES `Review` WRITE;
 /* Item Id before customer id */
 INSERT INTO `Review` VALUES (3,5, 3, 5, 'The BEST MANGA of all time.');

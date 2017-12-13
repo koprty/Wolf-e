@@ -105,7 +105,7 @@ CREATE TRIGGER update_item_review AFTER INSERT ON Review
 				WHERE Item.ItemId = r.ItemId 
 			), 
 			NumReviews = NumReviews + 1 
-		WHERE Item.ItemId = Review.ItemId; 
+		WHERE Item.ItemId = NEW.ItemId; 
 	END; 
 	$$ 
 
