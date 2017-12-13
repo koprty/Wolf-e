@@ -8,7 +8,19 @@ UNLOCK TABLES;
 
 LOCK TABLES `Customer` WRITE;
 /*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
-INSERT INTO `Customer` VALUES (2,'She','Wolf','s@stonybrook.edu',1234567890,"123");
+INSERT INTO `Customer` VALUES (2,'Selina','Wolf','s@stonybrook.edu',1234567890,"123");
+/*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `Customer` WRITE;
+/*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
+INSERT INTO `Customer` VALUES (3,'Ichigo','Kurosaki','bleach@stonybrook.edu',1234567890,"123");
+/*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+LOCK TABLES `Customer` WRITE;
+/*!40000 ALTER TABLE `Customer` DISABLE KEYS */;
+INSERT INTO `Customer` VALUES (4,'Matt','Wolfie Stuart','h@stonybrook.edu',1234567890,"123");
 /*!40000 ALTER TABLE `Customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -18,3 +30,23 @@ INSERT INTO `Item` VALUES (1,'Google Pixel',10,758.95,'ELECTRONICS',0.00,0),(2,'
 /*!40000 ALTER TABLE `Item` ENABLE KEYS */;
 UNLOCK TABLES;
 
+LOCK TABLES `Review` WRITE;
+/* Item Id before customer id */
+INSERT INTO `Review` VALUES (1,4, 2, 5, 'Naruto is one of the best mangas written in this universe. If you ever need to take a break from studying from finals, this is absolutely the best book for you.');
+UNLOCK TABLES;
+
+LOCK TABLES `Review` WRITE;
+/* Item Id before customer id */
+INSERT INTO `Review` VALUES (2,6, 3, 3, 'This is an amazing product, but is way overpriced.');
+UNLOCK TABLES;
+
+
+LOCK TABLES `Review` WRITE;
+/* Item Id before customer id */
+INSERT INTO `Review` VALUES (3,5, 3, 5, 'The BEST MANGA of all time.');
+UNLOCK TABLES;
+
+LOCK TABLES `Review` WRITE;
+/* Item Id before customer id */
+INSERT INTO `Review` VALUES (4,6, 4, 5, 'Very useful thing to have around finals time.');
+UNLOCK TABLES;
